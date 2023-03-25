@@ -1,4 +1,4 @@
-# -Proyecto2-DesarrolloYConsultaDeBaseDeDatos-BaseDeDatos1
+# Proyecto2-DesarrolloYConsultaDeBaseDeDatos-BaseDeDatos1
 
 Creado por:
 
