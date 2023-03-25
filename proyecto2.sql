@@ -1,5 +1,7 @@
-CREATE TABLE clientes (
-    nombre character varying(50),
-    email character varying(100),
-    telefono character varying(20)
+CREATE TABLE login (
+  id SERIAL PRIMARY KEY,
+  usuar varchar(50),
+  password varchar(50),
+  email varchar(50),
+  pasadmin varchar(50)
 );
