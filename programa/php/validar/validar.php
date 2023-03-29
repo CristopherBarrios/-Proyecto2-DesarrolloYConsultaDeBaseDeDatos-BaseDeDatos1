@@ -17,7 +17,7 @@ $sql = pg_query($con, "SELECT * FROM login WHERE email='$username'");
 
 if ($f = pg_fetch_array($sql)) {
     if ($pass == $f['password']) {
-        header("Location: ../../ref/application/application.php");
+        header("Location: ../../ref/bar/bar.php");
     } else {
         echo '<script>alert("CONTRASEÑA INCORRECTA")</script> ';
         echo "<script>location.href='../../../index.php'</script>";
