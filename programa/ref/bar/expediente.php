@@ -114,6 +114,84 @@
 
     <section class="home">
         <div class="text">Expediente del Paciente</div>
+        <div class="">
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-container2">
+                    <h2 class="form-title">Pacientes</h2>
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="doc_name">Nombre:</label>
+                                    <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="unidad">Unidad de salud:</label>
+                                    <select name="opcion" id="unidad" class="form-control" required>
+                                        <option disabled selected>Selecciona una opción</option>
+                                        <option value="opcion1">Opción 1</option>
+                                        <option value="opcion2">Opción 2</option>
+                                        <option value="opcion3">Opción 3</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="informacion">Información:</label>
+                                    <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="fecha">Fecha:</label>
+                                    <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                                </div>
+                            </td>
+                            <td colspan="2">
+                                <div class="form-group">
+                                    <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </form>
+        </div>
+
+
+
+        
+        <div class="separacion">
+            <div class="form-container2">
+            <h2 class="form-title">Resultados</h2>
+            <table>
+                        <tr>
+                            <td>
+                                <div class="form-group">
+                                    <label for="doc_name">Nombre:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="unidad">Unidad de salud:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="informacion">Información:</label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="form-group">
+                                    <label for="fecha">Fecha:</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+            </div>
+        </div>
     </section>
 
     <script>

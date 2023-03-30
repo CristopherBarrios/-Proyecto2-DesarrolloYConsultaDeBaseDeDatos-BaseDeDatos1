@@ -8,7 +8,7 @@
     
 
     <link rel="stylesheet" href="../../css/barra.css">
-    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
 
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     
@@ -116,18 +116,116 @@
         <div class="text">Mantenimiento de Usuarios</div>
         <div>
             <form action="" method="POST" enctype="multipart/form-data">
-                <table>
-                    <tr>
-                        <th colspan="5" class="text text-center" >Agrega nuevos Usuarios</th>
-					</tr>
+                <div class="form-container">
+                    <h2 class="form-title">Agrega nuevos Usuarios</h2>
+                    <div class="form-group">
+                        <label for="doc_name">Nombre:</label>
+                        <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unidad">Unidad de salud:</label>
+                        <select name="opcion" id="unidad" class="form-control" required>
+                            <option disabled selected>Selecciona una opción</option>
+                            <option value="opcion1">Opción 1</option>
+                            <option value="opcion2">Opción 2</option>
+                            <option value="opcion3">Opción 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="informacion">Información:</label>
+                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                    </div>
+                </div>
+            </form>
+        </div>
 
-                    <tr class="text">
-						<th>NOMBRE</th>
-						<th>UNIDAD DE SALUD</th>
-						<th>INFORMACION</th>
-					</tr>
 
-                </table>
+
+
+        <div class="separacion">
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-container">
+                    <h2 class="form-title">Actualizar Informacion Usuarios</h2>
+                    <div class="form-group">
+                        <label for="doc_name">Nombre:</label>
+                        <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unidad">Unidad de salud:</label>
+                        <select name="opcion" id="unidad" class="form-control" required>
+                            <option disabled selected>Selecciona una opción</option>
+                            <option value="opcion1">Opción 1</option>
+                            <option value="opcion2">Opción 2</option>
+                            <option value="opcion3">Opción 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="informacion">Información:</label>
+                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha:</label>
+                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class="separacion">
+            <form action="" method="POST" enctype="multipart/form-data">
+                <div class="form-container">
+                    <h2 class="form-title">Historial de traslado</h2>
+                    <div class="form-group">
+                        <label for="doc_name">Nombre:</label>
+                        <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unidad">Unidad de salud:</label>
+                        <select name="opcion" id="unidad" class="form-control" required>
+                            <option disabled selected>Selecciona una opción</option>
+                            <option value="opcion1">Opción 1</option>
+                            <option value="opcion2">Opción 2</option>
+                            <option value="opcion3">Opción 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha de inicio en que laboro</label>
+                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha">Fecha final</label>
+                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="unidad">Unidad de salud a la que se traslada:</label>
+                        <select name="opcion" id="unidad" class="form-control" required>
+                            <option disabled selected>Selecciona una opción</option>
+                            <option value="opcion1">Opción 1</option>
+                            <option value="opcion2">Opción 2</option>
+                            <option value="opcion3">Opción 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="informacion">Información:</label>
+                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                    </div>
+                </div>
             </form>
         </div>
     </section>
