@@ -382,7 +382,7 @@ body.dark .home .text{
     display: inline-block;
     padding: 10px 20px;
     border: none;
-    background-color: #007bff;
+    background-color: var(--primary-color);
     color: var(--toggle-color);
     font-size: 16px;
     border-radius: 5px;
@@ -390,12 +390,12 @@ body.dark .home .text{
   }
   
   .btn:hover {
-    background-color: #0069d9;
+    background-color: var(--primary-color)
   }
   
   .btn:focus {
     outline: none;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+    box-shadow: var(--primary-color);
   }
   
   .separacion {

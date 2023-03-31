@@ -151,7 +151,7 @@
                             </td>
                             <td colspan="2">
                                 <div class="form-group">
-                                    <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                                    <input name="submit" type="submit" class="btn btn-primary" value="Buscar">
                                 </div>
                             </td>
                         </tr>
@@ -162,34 +162,40 @@
 
 
 
-        
+<?php
+require('../../php/conectar/conexion.php');
+$sql = "SELECT * FROM users ORDER BY name ASC";
+$res =  pg_query($con,$sql);
+?>
+
         <div class="separacion">
             <div class="form-container2">
-            <h2 class="form-title">Resultados</h2>
-            <table>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <label for="doc_name">Nombre:</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="unidad">Unidad de salud:</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="informacion">Información:</label>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="fecha">Fecha:</label>
-                                </div>
-                            </td>
+                <h2 class="form-title">Resultados</h2>
+                <table>
+                    <thead>
+                        <tr class="bg-primary titulo">
+                            <th>ID</th>
+				            <th>Nombre</th>
+				            <th>Unidad de salud</th>
+				            <th>Información</th>
+				            <th>Fecha</th>
                         </tr>
-                    </table>
+                    </thead>
+                    <?php
+                    while($row = pg_fetch_array($res)){
+                        $fecha1=$row['date_added'];
+                        $fecha2=date("d-m-Y",strtotime($fecha1));
+                        echo "
+                        <tr>
+                            <td>".$row['id']."</td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['health_unit']."</td>
+                            <td>".$row['information']."</td>
+                            <td>".$fecha2. "</td>
+                        </tr>";
+                    }
+                    ?>
+                </table>
             </div>
         </div>
     </section>

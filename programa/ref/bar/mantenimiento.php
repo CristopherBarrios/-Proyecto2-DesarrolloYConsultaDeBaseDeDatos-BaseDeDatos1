@@ -115,12 +115,12 @@
     <section class="home">
         <div class="text">Mantenimiento de Usuarios</div>
         <div>
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="../../php/actions/insertar.php" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
                     <h2 class="form-title">Agrega nuevos Usuarios</h2>
                     <div class="form-group">
                         <label for="doc_name">Nombre:</label>
-                        <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                        <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
@@ -175,7 +175,7 @@
                         <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Modificar">
                     </div>
                 </div>
             </form>
@@ -189,7 +189,7 @@
                     <h2 class="form-title">Historial de traslado</h2>
                     <div class="form-group">
                         <label for="doc_name">Nombre:</label>
-                        <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                        <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
@@ -223,7 +223,7 @@
                     </div>
 
                     <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                        <input name="submit" type="submit" class="btn btn-primary " value="Trasladar">
                     </div>
                 </div>
             </form>
