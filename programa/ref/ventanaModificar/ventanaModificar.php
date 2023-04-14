@@ -125,38 +125,40 @@ $row = pg_fetch_array($res);
 ?>
 
         <form action="../../php/actions/modificar.php?id=<?php echo $row['id']; ?>" method="POST" enctype="multipart/form-data">
-            <table class="table">
-                <tr>
-                    <th colspan="5" class="bg-primary text-center" >MODIFICA EL EXPEDIENTE</th></tr>
-                <tr class="bg-primary">
-                    <th>Nombre: <?php echo  $row['name'];?></th>
-		            <th>Unidad de salud</th>
-                    <th>Información</th>
-		            <th>Fecha</th>
-		            <th></th>
-	            </tr>
-	            <tr class="bg-info">
-                    <td>
-                        <input REQUIRED name="name" type="text" class="form-control" placeholder="Nombre" value="">
-                    </td>
-                    <td>
-                            <select required name="opcion" class="btn">
-                                <option disabled selected>Selecciona una opción</option>
+            <div class="form-container2">
+                <table class="table">
+                    <tr>
+                        <th colspan="5" class="bg-primary text-center" >MODIFICA EL EXPEDIENTE</th></tr>
+                    <tr class="bg-primary">
+                        <th>Nombre: <?php echo  $row['name'];?></th>
+		                <th>Unidad de salud</th>
+                        <th>Información</th>
+		                <th>Fecha</th>
+		                <th></th>
+	                </tr>
+	                <tr class="bg-info">
+                        <td>
+                            <input REQUIRED name="name" type="text" class="form-control" placeholder="Nombre" value="">
+                        </td>
+                        <td>
+                                <select required name="opcion" class="form-control">
+                                    <option disabled selected>Selecciona una opción</option>
 
-                                <option value="opcion1">Opción 1</option>
-                                <option value="opcion2">Opción 2</option>
-                                <option value="opcion3">Opción 3</option>
+                                    <option value="opcion1">Opción 1</option>
+                                    <option value="opcion2">Opción 2</option>
+                                    <option value="opcion3">Opción 3</option>
 
-                            </select>
-                    </td>
-                    <td>
-                        <input REQUIRED name="informacion" type="text" class="form-control" placeholder="Nombre" value="">
-                    </td>
-                    <td><input REQUIRED name="fecha" type="date" class="form-control" placeholder="Fecha" value="<?php echo $fecha = $row['date_added'];?>"></td>
-                    <td><input  name="modificar" type="submit" class="btn btn-success" value="MODIFICAR" > </td>
-                </tr>
-            </table>
-            <br><br>
+                                </select>
+                        </td>
+                        <td>
+                            <input REQUIRED name="informacion" type="text" class="form-control" placeholder="Nombre" value="">
+                        </td>
+                        <td><input REQUIRED name="fecha" type="date" class="form-control" placeholder="Fecha" value="<?php echo $fecha = $row['date_added'];?>"></td>
+                        <td><input  name="modificar" type="submit" class="btn btn-success" value="MODIFICAR" > </td>
+                    </tr>
+                </table>
+                <br><br>
+            </div>
         </form>
 
     </section>
