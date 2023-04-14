@@ -162,13 +162,14 @@
 
 
 
-<?php
-require('../../php/conectar/conexion.php');
-$sql = "SELECT * FROM users ORDER BY name ASC";
-$res =  pg_query($con,$sql);
-?>
+
 
         <div class="separacion">
+            <?php
+                require('../../php/conectar/conexion.php');
+                $sql = "SELECT * FROM users ORDER BY name ASC";
+                $res =  pg_query($con,$sql);
+            ?>
             <div class="form-container2">
                 <h2 class="form-title">Resultados</h2>
                 <table>
@@ -192,6 +193,15 @@ $res =  pg_query($con,$sql);
                             <td>".$row['health_unit']."</td>
                             <td>".$row['information']."</td>
                             <td>".$fecha2. "</td>
+                            <td>
+                            <form action='../actions/eliminar.php?id=".$row['id']."' method='POST' enctype='multipart/form-data'>
+                                <input name='eliminar' type='submit' class='btn btn-danger' value='ELIMINAR' onclick='return confirm(\"¿Seguro que deseas eliminar este registro?\")' >
+                            </form>
+                            <br>
+                            <form action='../ventanaModificar/ventanaModificar.php?id=".$row['id']."'method='POST' enctype='multipart/form-data'>
+                                <input name='submit' type='submit' class='btn btn-primary' value='MODIFICAR'  >
+                            </form> 
+                        </td>
                         </tr>";
                     }
                     ?>
