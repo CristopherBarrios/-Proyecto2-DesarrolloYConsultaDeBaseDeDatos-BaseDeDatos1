@@ -10,6 +10,9 @@ function OpUbica() {
 	if(isset($_POST['modificar'])){
 		$tabla =  "users";
 	}
+	if(isset($_POST['eliminar'])){
+		$tabla =  "users";
+	}
     return [$tabla];
 }
 

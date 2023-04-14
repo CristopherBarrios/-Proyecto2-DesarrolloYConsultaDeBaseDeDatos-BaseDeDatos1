@@ -194,7 +194,7 @@
                             <td>".$row['information']."</td>
                             <td>".$fecha2. "</td>
                             <td>
-                            <form action='../actions/eliminar.php?id=".$row['id']."' method='POST' enctype='multipart/form-data'>
+                            <form action='../../php/actions/eliminar.php?id=".$row['id']."' method='POST' enctype='multipart/form-data'>
                                 <input name='eliminar' type='submit' class='btn btn-danger' value='ELIMINAR' onclick='return confirm(\"¿Seguro que deseas eliminar este registro?\")' >
                             </form>
                             <br>
