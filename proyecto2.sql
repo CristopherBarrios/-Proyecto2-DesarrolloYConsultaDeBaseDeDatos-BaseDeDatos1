@@ -122,7 +122,7 @@ CREATE TRIGGER bit_ins
 
 --listo
 create table inventario(
-	establecimiento INT PRIMARY KEY REFERENCES establecimiento(estab_id),
+	establecimiento INT REFERENCES establecimiento(estab_id),
 	insumos INT REFERENCES insumos(insumo_id),
 	cantidad INT,
 	caduca DATE
@@ -250,10 +250,53 @@ create table bitacora(
 );
 
 
+--POBLAR PACIENTE
+INSERT INTO paciente (nombre, apellido, IMC, altura, peso, adicciones, telefono, dirección)
+VALUES 
+('Maria', 'Gomez', 21.2, 1.7, 56.0, 0, '12345678', 'Calle 1 #123'),
+('Pedro', 'Lopez', 25.5, 1.8, 78.0, 0, '23456789', 'Calle 2 #234'),
+('Ana', 'Martinez', 32.0, 1.6, 92.0, 1, '34567890', 'Calle 3 #345'),
+('Jose', 'Garcia', 23.1, 1.75, 70.0, 0, '45678901', 'Calle 4 #456'),
+('Sofia', 'Rodriguez', 27.6, 1.65, 75.0, 1, '56789012', 'Calle 5 #567'),
+('Carlos', 'Perez', 19.8, 1.85, 65.0, 0, '67890123', 'Calle 6 #678'),
+('Laura', 'Gonzalez', 24.5, 1.7, 70.0, 0, '78901234', 'Calle 7 #789'),
+('David', 'Sanchez', 31.2, 1.8, 90.0, 1, '89012345', 'Calle 8 #890'),
+('Isabel', 'Hernandez', 28.7, 1.65, 80.0, 0, '90123456', 'Calle 9 #901'),
+('Luis', 'Diaz', 22.4, 1.75, 68.0, 0, '01234567', 'Calle 10 #012'),
+('Carla', 'Ramirez', 26.1, 1.6, 70.0, 1, '12345670', 'Calle 11 #123'),
+('Mario', 'Cruz', 29.8, 1.7, 85.0, 0, '23456701', 'Calle 12 #234'),
+('Patricia', 'Torres', 33.5, 1.65, 95.0, 1, '34567812', 'Calle 13 #345'),
+('Gabriel', 'Ruiz', 25.9, 1.8, 75.0, 0, '45678923', 'Calle 14 #456'),
+('Lucia', 'Alvarez', 27.4, 1.7, 72.0, 0, '56789034', 'Calle 15 #567'),
+('Fernando', 'Mendoza', 30.1, 1.75, 88.0, 1, '67890145', 'Calle 16 #678'),
+('Mariana', 'Gutierrez', 20.5, 1.6, 60.0, 0, '78901256', 'Calle 17 #829');
+
+--POBLAR MEDICO
+INSERT INTO medico (nombre, apellido, telefono, dirección, numero_colegiado, especialidad)
+VALUES 
+('Juan', 'Perez', '12345678', 'Calle 1 #123', '1234', 'Cardiología'),
+('Maria', 'Garcia', '23456789', 'Calle 2 #234', '2345', 'Pediatría'),
+('Luis', 'Hernandez', '34567890', 'Calle 3 #345', '3456', 'Oftalmología'),
+('Ana', 'Martinez', '45678901', 'Calle 4 #456', '4567', 'Ginecología'),
+('Carlos', 'Lopez', '56789012', 'Calle 5 #567', '5678', 'Dermatología'),
+('Marta', 'Sanchez', '67890123', 'Calle 6 #678', '6789', 'Neurología'),
+('Jorge', 'Gonzalez', '78901234', 'Calle 7 #789', '7890', 'Oncología'),
+('Elena', 'Rodriguez', '89012345', 'Calle 8 #890', '8901', 'Traumatología'),
+('Rafael', 'Diaz', '90123456', 'Calle 9 #901', '9012', 'Psiquiatría'),
+('Isabel', 'Pérez', '01234567', 'Calle 10 #012', '0123', 'Urología'),
+('Diego', 'Gomez', '12345670', 'Calle 11 #123', '1235', 'Endocrinología'),
+('Lucia', 'Ruiz', '23456701', 'Calle 12 #234', '2346', 'Otorrinolaringología'),
+('Mario', 'Torres', '34567812', 'Calle 13 #345', '3457', 'Hematología'),
+('Fernanda', 'Alvarez', '45678923', 'Calle 14 #456', '4568', 'Nutrición'),
+('Jose', 'Cruz', '56789034', 'Calle 15 #567', '5679', 'Neumología'),
+('Sofia', 'Mendoza', '67890145', 'Calle 16 #678', '6780', 'Infectología'),
+('Pedro', 'Gutierrez', '78901256', 'Calle 17 #789', '7891', 'Anestesiología');
+('Mariana', 'Gutierrez', 20.5, 1.6, 60.0, 0, '78901256', 'Calle 17 #829');
 
 
 
 
+<<<<<<< Updated upstream
 
 --POBLAR PACIENTE
 INSERT INTO paciente (nombre, apellido, IMC, altura, peso, adicciones, telefono, dirección)
@@ -301,6 +344,10 @@ VALUES
 
 --POBLAR ESTABLECIMIENTO
 INSERT INTO establecimiento (nombre, direccion, tipo)
+=======
+--POBLAR ESTABLECIMIENTO
+INSERT INTO establecimiento1 (nombre, direccion, tipo)
+>>>>>>> Stashed changes
 VALUES 
 ('Hospital Central', 'Calle 1 #123', 'Hospital'),
 ('Clinica San Juan', 'Calle 2 #234', 'Clinica'),
@@ -346,8 +393,11 @@ VALUES
     ('UTENSILIO', 'Alcohol'),
     ('UTENSILIO', 'Pinzas');
 
+<<<<<<< Updated upstream
 alter table inventario drop constraint inventario_pkey;
 
+=======
+>>>>>>> Stashed changes
 --POBLAR INVENTARIO
 INSERT INTO inventario (establecimiento, insumos, cantidad, caduca)
 SELECT 
@@ -361,19 +411,34 @@ CROSS JOIN
     insumos i
 LIMIT 150;
 
+<<<<<<< Updated upstream
 -- POBLAR TRABAJO
 INSERT INTO trabajo (establecimiento, medico)
 SELECT random() * 18 + 1, random() * 17 + 1;
+=======
+
+
+-- POBLAR TRABAJO
+INSERT INTO trabajo1 (establecimiento, medico)
+SELECT random() * 19, random() * 18;
+>>>>>>> Stashed changes
 
 
 
 --POBLAR CITA	
 																					
+<<<<<<< Updated upstream
 INSERT INTO cita(paciente, establecimiento, fecha) 
 SELECT
 	p.pac_id,
 	e.estab_id,
 	 CURRENT_DATE + (random()*365)::int * '1 day'::interval
+=======
+INSERT INTO cita 
+SELECT
+	p.pac_id,
+	e.estab_id
+>>>>>>> Stashed changes
 FROM
 	paciente p
 CROSS JOIN
@@ -445,8 +510,11 @@ INSERT INTO Examenes (nombre) VALUES
 ('Tomografía'),
 ('Resonancia magnética');
 
+<<<<<<< Updated upstream
 alter table cirugia alter column nombre SET DATA TYPE VARCHAR(40);
 
+=======
+>>>>>>> Stashed changes
 --POBLAR CIRUGIA
 INSERT INTO Cirugia (nombre) VALUES
 ('Cirugía de cataratas'),
@@ -494,8 +562,11 @@ INSERT INTO Cirugia (nombre) VALUES
 ('Cirugía de astigmatismo'),
 ('Cirugía de hipermetropía');
 
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 --POBLAR PROCEDIMIENTOS
 INSERT INTO Procedimientos (tipo, id_tipo, medico, paciente)
 VALUES 
