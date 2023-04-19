@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link rel="apple-touch-icon" sizes="180x180" href="../../img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../img/fav/favicon-16x16.png">
+    <link rel="manifest" href="../../img/fav/site.webmanifest">
 
     <link rel="stylesheet" href="../../css/barra.css">
     
@@ -36,11 +40,18 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="bar.php">
-                            <i class='bx bx-search icon'></i>
-                            <span class="text ">Buscar</span>
+                            
+                            <i class='bx bx-heart icon' ></i>
+                            <span class="text ">Inicio</span>
                         </a>
                     </li>
 
+                    <li class="nav-link">
+                        <a href="medicamento.php">
+                            <i class='bx bx-wallet icon' ></i>
+                            <span class="text nav-text">Medicamento</span>
+                        </a>
+                    </li>
 
                     <li class="search-box">
                         <a href="expediente.php">
@@ -57,32 +68,27 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notifications</span>
+                        <a href="reporteria.php">
+                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <span class="text nav-text">Reporteria</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <i class='bx bx-bell icon'></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-heart icon' ></i>
+                        <i class='bx bx-search icon'></i>
                             <span class="text nav-text">Likes</span>
                         </a>
                     </li>
 
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Wallets</span>
-                        </a>
-                    </li>
+
 
                 </ul>
             </div>
@@ -122,31 +128,24 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="doc_name">Nombre:</label>
-                                    <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="unidad">Unidad de salud:</label>
+                                    <label for="doc_name">tipo:</label>
                                     <select name="opcion" id="unidad" class="form-control" required>
                                         <option disabled selected>Selecciona una opción</option>
-                                        <option value="opcion1">Opción 1</option>
-                                        <option value="opcion2">Opción 2</option>
-                                        <option value="opcion3">Opción 3</option>
+                                        <option value="opcion1">Examen</option>
+                                        <option value="opcion2">Cirugia</option>
                                     </select>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="informacion">Información:</label>
-                                    <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
+                                    <label for="informacion">Medico:</label>
+                                    <input name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></input>
                                 </div>
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <label for="fecha">Fecha:</label>
-                                    <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                                    <label for="fecha">Paciente:</label>
+                                    <input name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></input>
                                 </div>
                             </td>
                             <td colspan="2">
@@ -159,49 +158,49 @@
                 </div>
             </form>
         </div>
+        <style>
+        .mi-tabla {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
 
-
-
-
-
+        }
+        .mi-tabla td, .mi-tabla th {
+            width: 25%;
+            padding: 10px;
+            word-wrap: break-word;
+            /* border: 1px solid gray; */
+            border-bottom: 1px solid gray;
+        }
+        </style>
         <div class="separacion">
             <?php
                 require('../../php/conectar/conexion.php');
-                $sql = "SELECT * FROM users ORDER BY name ASC";
+                $sql = "SELECT * FROM Procedimientos";
                 $res =  pg_query($con,$sql);
             ?>
             <div class="form-container2">
                 <h2 class="form-title">Resultados</h2>
-                <table>
+                <table class="mi-tabla">
                     <thead>
                         <tr class="bg-primary titulo">
-                            <th>ID</th>
-				            <th>Nombre</th>
-				            <th>Unidad de salud</th>
-				            <th>Información</th>
-				            <th>Fecha</th>
+                            <th>proced_id</th>
+				            <th>tipo</th>
+				            <th>id_tipo</th>
+				            <th>medico</th>
+				            <th>paciente</th>
                         </tr>
                     </thead>
                     <?php
                     while($row = pg_fetch_array($res)){
-                        $fecha1=$row['date_added'];
-                        $fecha2=date("d-m-Y",strtotime($fecha1));
                         echo "
                         <tr>
-                            <td>".$row['id']."</td>
-                            <td>".$row['name']."</td>
-                            <td>".$row['health_unit']."</td>
-                            <td>".$row['information']."</td>
-                            <td>".$fecha2. "</td>
-                            <td>
-                            <form action='../../php/actions/eliminar.php?id=".$row['id']."' method='POST' enctype='multipart/form-data'>
-                                <input name='eliminar' type='submit' class='btn btn-danger' value='ELIMINAR' onclick='return confirm(\"¿Seguro que deseas eliminar este registro?\")' >
-                            </form>
-                            <br>
-                            <form action='../ventanaModificar/ventanaModificar.php?id=".$row['id']."'method='POST' enctype='multipart/form-data'>
-                                <input name='submit' type='submit' class='btn btn-primary' value='MODIFICAR'  >
-                            </form> 
-                        </td>
+                            <td>".$row['proced_id']."</td>
+                            <td>".$row['tipo']."</td>
+                            <td>".$row['id_tipo']."</td>
+                            <td>".$row['medico']."</td>
+                            <td>".$row['paciente']. "</td>
+
                         </tr>";
                     }
                     ?>

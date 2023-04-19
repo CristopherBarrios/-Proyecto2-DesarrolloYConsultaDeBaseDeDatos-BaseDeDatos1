@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="programa/css/bootstrap.min.css">
     <link rel="stylesheet" href="programa/css/materialize.min.css">
     <link rel="stylesheet" href="programa/css/tooplate.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="programa/img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="programa/img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="programa/img/fav/favicon-16x16.png">
+    <link rel="manifest" href="programa/img/fav/site.webmanifest">
 </head>
 
 <body id="home">

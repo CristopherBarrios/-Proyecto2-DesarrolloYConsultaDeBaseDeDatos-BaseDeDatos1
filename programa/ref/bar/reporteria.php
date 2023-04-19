@@ -39,7 +39,7 @@
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
-                    <li class="search-box">
+                    <li class="nav-link">
                         <a href="bar.php">
                             
                             <i class='bx bx-heart icon' ></i>
@@ -68,7 +68,7 @@
                         </a>
                     </li>
 
-                    <li class="nav-link">
+                    <li class="search-box">
                         <a href="reporteria.php">
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Reporteria</span>
@@ -120,7 +120,101 @@
     </nav>
 
     <section class="home">
-        <div class="text">Proyecto Hospital</div>
+        <div class="text">Reporteria</div>
+
+        <style>
+        .mi-tabla {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+        .mi-tabla td, .mi-tabla th {
+            width: 25%;
+            padding: 10px;
+            word-wrap: break-word;
+            /* border: 1px solid gray; */
+            border-bottom: 1px solid gray;
+        }
+        </style>
+            <div class="form-container2">
+                <h2 class="form-title">1. El top 10 de las enfermedades más mortales</h2>
+                <table class="mi-tabla">
+                    <thead>
+                        <tr class="bg-primary titulo">
+                            <th>Columna1</th>
+				            <th>Columna2</th>
+				            <th>Columna3</th>
+				            <th>Columna4</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="separacion">
+                <div class="form-container2">
+                    <h2 class="form-title">2. Top 10 de los médicos que más pacientes han atendido</h2>
+                    <table class="mi-tabla">
+                        <thead>
+                            <tr class="bg-primary titulo">
+                                <th>Columna1</th>
+				                <th>Columna2</th>
+				                <th>Columna3</th>
+				                <th>Columna4</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="separacion">
+                <div class="form-container2">
+                    <h2 class="form-title">3. El top 5 de los pacientes con más asistencias a alguna unidad de salud y que debe de incluir su información general (peso, altura, índice de masa corporal, etc.)</h2>
+                    <table class="mi-tabla">
+                        <thead>
+                            <tr class="bg-primary titulo">
+                                <th>Columna1</th>
+				                <th>Columna2</th>
+				                <th>Columna3</th>
+				                <th>Columna4</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="separacion">
+                <div class="form-container2">
+                    <h2 class="form-title">4. Reporte medicinas o suministros que están a punto de terminarse para una unidad de salud dada</h2>
+                    <table class="mi-tabla">
+                        <thead>
+                            <tr class="bg-primary titulo">
+                                <th>Columna1</th>
+				                <th>Columna2</th>
+				                <th>Columna3</th>
+				                <th>Columna4</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+            <div class="separacion">
+                <div class="form-container2">
+                    <h2 class="form-title">5. Reporte de las 3 unidades de salud (hospitales, centros de salud y clínicas) que más pacientes atienden </h2>
+                    <table class="mi-tabla">
+                        <thead>
+                            <tr class="bg-primary titulo">
+                                <th>Columna1</th>
+				                <th>Columna2</th>
+				                <th>Columna3</th>
+				                <th>Columna4</th>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            </div>
     </section>
 
     <script>

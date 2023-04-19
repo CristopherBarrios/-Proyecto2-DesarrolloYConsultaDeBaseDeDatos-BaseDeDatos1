@@ -5,7 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+    <link rel="apple-touch-icon" sizes="180x180" href="../../img/fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../img/fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../../img/fav/favicon-16x16.png">
+    <link rel="manifest" href="../../img/fav/site.webmanifest">
 
     <link rel="stylesheet" href="../../css/barra.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
@@ -36,11 +40,18 @@
                 <ul class="menu-links">
                     <li class="nav-link">
                         <a href="bar.php">
-                            <i class='bx bx-search icon'></i>
-                            <span class="text ">Buscar</span>
+                            
+                            <i class='bx bx-heart icon' ></i>
+                            <span class="text ">Inicio</span>
                         </a>
                     </li>
 
+                    <li class="nav-link">
+                        <a href="medicamento.php">
+                            <i class='bx bx-wallet icon' ></i>
+                            <span class="text nav-text">Medicamento</span>
+                        </a>
+                    </li>
 
                     <li class="nav-link">
                         <a href="expediente.php">
@@ -57,32 +68,27 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-bell icon'></i>
-                            <span class="text nav-text">Notifications</span>
+                        <a href="reporteria.php">
+                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <span class="text nav-text">Reporteria</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-pie-chart-alt icon' ></i>
+                            <i class='bx bx-bell icon'></i>
                             <span class="text nav-text">Analytics</span>
                         </a>
                     </li>
 
                     <li class="nav-link">
                         <a href="#">
-                            <i class='bx bx-heart icon' ></i>
+                        <i class='bx bx-search icon'></i>
                             <span class="text nav-text">Likes</span>
                         </a>
                     </li>
 
-                    <li class="nav-link">
-                        <a href="#">
-                            <i class='bx bx-wallet icon' ></i>
-                            <span class="text nav-text">Wallets</span>
-                        </a>
-                    </li>
+
 
                 </ul>
             </div>
@@ -124,12 +130,24 @@
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
-                        <select name="opcion" id="unidad" class="form-control" required>
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="opcion1">Opción 1</option>
-                            <option value="opcion2">Opción 2</option>
-                            <option value="opcion3">Opción 3</option>
-                        </select>
+                        <select required name="opcion" class="form-control">
+                                        <option hidden value="Escoja">Selecciona una opción</option>
+								
+								
+								
+									<?php
+									require('../../php/conectar/conexion.php');
+									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
+									while($row2 = pg_fetch_array($res2))
+									{
+										?>
+										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
+										<?php 
+									} ?>
+
+
+
+								</select>
                     </div>
                     <div class="form-group">
                         <label for="informacion">Información:</label>
@@ -159,12 +177,24 @@
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
-                        <select name="opcion" id="unidad" class="form-control" required>
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="opcion1">Opción 1</option>
-                            <option value="opcion2">Opción 2</option>
-                            <option value="opcion3">Opción 3</option>
-                        </select>
+                        <select required name="opcion" class="form-control">
+                                        <option hidden value="Escoja">Selecciona una opción</option>
+								
+								
+								
+									<?php
+									require('../../php/conectar/conexion.php');
+									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
+									while($row2 = pg_fetch_array($res2))
+									{
+										?>
+										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
+										<?php 
+									} ?>
+
+
+
+								</select>
                     </div>
                     <div class="form-group">
                         <label for="informacion">Información:</label>
@@ -193,12 +223,24 @@
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
-                        <select name="opcion" id="unidad" class="form-control" required>
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="opcion1">Opción 1</option>
-                            <option value="opcion2">Opción 2</option>
-                            <option value="opcion3">Opción 3</option>
-                        </select>
+                        <select required name="opcion" class="form-control">
+                                        <option hidden value="Escoja">Selecciona una opción</option>
+								
+								
+								
+									<?php
+									require('../../php/conectar/conexion.php');
+									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
+									while($row2 = pg_fetch_array($res2))
+									{
+										?>
+										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
+										<?php 
+									} ?>
+
+
+
+								</select>
                     </div>
                     <div class="form-group">
                         <label for="fecha">Fecha de inicio en que laboro</label>
@@ -210,12 +252,24 @@
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud a la que se traslada:</label>
-                        <select name="opcion" id="unidad" class="form-control" required>
-                            <option disabled selected>Selecciona una opción</option>
-                            <option value="opcion1">Opción 1</option>
-                            <option value="opcion2">Opción 2</option>
-                            <option value="opcion3">Opción 3</option>
-                        </select>
+                        <select required name="opcion" class="form-control">
+                                        <option hidden value="Escoja">Selecciona una opción</option>
+								
+								
+								
+									<?php
+									require('../../php/conectar/conexion.php');
+									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
+									while($row2 = pg_fetch_array($res2))
+									{
+										?>
+										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
+										<?php 
+									} ?>
+
+
+
+								</select>
                     </div>
                     <div class="form-group">
                         <label for="informacion">Información:</label>
