@@ -602,5 +602,5 @@ VALUES
 ('Cirugia', 5, 1, 2);
 
 
-
+alter table diagnostico add column medicina INT REFERENCES insumos(insumo_id),info_medicina TEXT;
 
