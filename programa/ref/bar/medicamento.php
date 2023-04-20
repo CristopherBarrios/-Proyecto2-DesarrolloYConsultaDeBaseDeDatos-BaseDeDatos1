@@ -176,12 +176,7 @@
 								</select>
                                 </div>
                             </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="fecha">Caduca</label>
-                                    <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                                </div>
-                            </td>
+
                             <td colspan="2">
                                 <div class="form-group">
                                     <input name="submit" type="submit" class="btn btn-primary" value="Buscar">
@@ -210,11 +205,11 @@
         <div class="separacion">
             <?php
                 require('../../php/conectar/conexion.php');
-                $sql = "SELECT * FROM inventario ORDER BY caduca ASC";
+                $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as insumos, inventario.cantidad, inventario.caduca, CASE WHEN caduca <= NOW() THEN 'Vencido' WHEN caduca <= NOW() + INTERVAL '1 month' THEN 'Por vencer pronto' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE caduca <= NOW() OR caduca <= NOW() + INTERVAL '1 month';";
                 $res =  pg_query($con,$sql);
             ?>
             <div class="form-container2">
-                <h2 class="form-title">Resultados</h2>
+                <h2 class="form-title">Medicamento vencido/por vencer</h2>
                 <table class="mi-tabla">
                     <thead>
                         <tr class="bg-primary titulo">
@@ -222,6 +217,7 @@
 				            <th>Insumos</th>
 				            <th>Cantidad</th>
 				            <th>Caduca</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <?php
@@ -234,6 +230,44 @@
                             <td>".$row['insumos']."</td>
                             <td>".$row['cantidad']."</td>
                             <td>".$fecha2. "</td>
+                            <td>".$row['estado']."</td>
+                        </tr>";
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="separacion">
+            <?php
+                require('../../php/conectar/conexion.php');
+                $sql = "select establecimiento.nombre as establecimiento, insumos.nombre as  insumos , inventario.cantidad, inventario.caduca, case when cantidad <=5 then 'Últimas unidades' when (cantidad > 5 and cantidad <=15) then 'Por terminarse' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE cantidad <=15;";
+                $res =  pg_query($con,$sql);
+            ?>
+            <div class="form-container2">
+                <h2 class="form-title">Medicamento con poco stock</h2>
+                <table class="mi-tabla">
+                    <thead>
+                        <tr class="bg-primary titulo">
+                            <th>Establecimiento</th>
+				            <th>Insumos</th>
+				            <th>Cantidad</th>
+				            <th>Caduca</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <?php
+                    while($row = pg_fetch_array($res)){
+                        $fecha1=$row['caduca'];
+                        $fecha2=date("d-m-Y",strtotime($fecha1));
+                        echo "
+                        <tr>
+                            <td>".$row['establecimiento']."</td>
+                            <td>".$row['insumos']."</td>
+                            <td>".$row['cantidad']."</td>
+                            <td>".$fecha2. "</td>
+                            <td>".$row['estado']."</td>
                         </tr>";
                     }
                     ?>
