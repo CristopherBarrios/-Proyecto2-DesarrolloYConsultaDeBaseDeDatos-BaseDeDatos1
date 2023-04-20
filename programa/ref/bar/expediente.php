@@ -130,24 +130,14 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <label for="doc_name">tipo:</label>
-                                    <select name="opcion" id="unidad" class="form-control" required>
-                                        <option disabled selected>Selecciona una opción</option>
-                                        <option value="opcion1">Examen</option>
-                                        <option value="opcion2">Cirugia</option>
-                                    </select>
+                                    <label for="fecha">Nombre:</label>
+                                    <input name="nombre" id="info1" class="form-control" placeholder="Ingrese el nombre"></input>
                                 </div>
                             </td>
                             <td>
-                                <div class="form-group">
-                                    <label for="informacion">Medico:</label>
-                                    <input name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></input>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="fecha">Paciente:</label>
-                                    <input name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></input>
+                                <div>
+                                    <label hidden = "hidden"> Apellido:</label>
+                                    <input name="apellido" id="info2" class="form-control" placeholder="Ingrese el apellido"></input>
                                 </div>
                             </td>
                             <td colspan="2">
@@ -176,35 +166,209 @@
         }
         </style>
         <div class="separacion">
-            <?php
-                require('../../php/conectar/conexion.php');
-                $sql = "SELECT * FROM Procedimientos";
-                $res =  pg_query($con,$sql);
-            ?>
             <div class="form-container2">
-                <h2 class="form-title">Resultados</h2>
+                <h1 class="form-title">Resultados</h1>
                 <table class="mi-tabla">
-                    <thead>
-                        <tr class="bg-primary titulo">
-                            <th>proced_id</th>
-				            <th>tipo</th>
-				            <th>id_tipo</th>
-				            <th>medico</th>
-				            <th>paciente</th>
-                        </tr>
-                    </thead>
                     <?php
-                    while($row = pg_fetch_array($res)){
-                        echo "
-                        <tr>
-                            <td>".$row['proced_id']."</td>
-                            <td>".$row['tipo']."</td>
-                            <td>".$row['id_tipo']."</td>
-                            <td>".$row['medico']."</td>
-                            <td>".$row['paciente']. "</td>
+                    require('../../php/conectar/conexion.php');
+                    
+                    if(isset($_POST["submit"])){
+                        $pnom = $_POST["nombre"];
+                        $pap = $_POST["apellido"];
+                        if($pnom != "" AND $pap != " "){
+                            $getid = "SELECT pac_id FROM paciente
+                            WHERE nombre = '".$pnom."' AND apellido = '".$pap."'";
+                            $id = pg_query($con,$getid);
+                            $rowid = pg_fetch_array($id);
 
-                        </tr>";
+                            $sql = "SELECT e.estado AS ahora FROM estado e INNER JOIN paciente ON e.paciente = '".$rowid['pac_id']."'";
+                            $estquery = pg_query($con,$sql);
+                            $estado = pg_fetch_array($estquery);
+                            echo "
+                                <thead>
+                                    <tr class='bg-primary titulo'>
+                                        <th><h2>Estado:</h2></th>
+                                    </tr>
+                                </thead>
+                                
+                                <tr>
+                                    <td> <h3>".$estado['ahora']."</h3></td>
+                                </tr>
+                                ";
+
+                            $sql = "SELECT e.nombre, c.fecha FROM establecimiento e 
+                                INNER JOIN cita c ON e.estab_id = c.establecimiento
+                                WHERE c.paciente = '".$rowid['pac_id']."'";
+                            $estab = pg_query($con,$sql);
+                            if(pg_num_rows($estab) > 0){
+                                echo "
+                                    <tr></tr>
+                                    <thead>
+                                        <tr class='bg-primary titulo'>
+                                            <th><h2>Citas Registradas:</h2></th>
+                                        </tr>
+                                    </thead>
+                                    <thead>
+                                        <tr >
+                                            <th>Establecimiento</th>
+                                            <th>Fecha</th>
+                                        </tr>
+                                    </thead>";
+                                while($row = pg_fetch_array($estab)){
+                                    echo"
+                                        <tr>
+                                            <td>".$row['nombre']."</td>
+                                            <td>".$row['fecha']."</td>
+                                        </tr>
+                                    ";
+                                }
+                            }
+
+                            $sql = "SELECT m.nombre AS mnombre, m.especialidad AS especialidad, e.nombre as establecimiento
+                            FROM medico m 
+                            INNER JOIN diagnostico d ON d.medico = m.medico_id
+                            INNER JOIN trabajo t ON t.medico = m.medico_id
+                            INNER JOIN establecimiento e ON t.establecimiento = e.estab_id
+                            WHERE d.paciente = '".$rowid['pac_id']."' AND t.medico = d.medico";
+                            $meds = pg_query($con,$sql);
+                            if(pg_num_rows($meds) > 0){
+                                echo "
+                                    <thead>
+                                        <tr class='bg-primary titulo'>
+                                            <th><h2>Medicos que lo han tratado:</h2></th>
+                                        </tr>
+                                    </thead>
+                                    <thead>
+                                    <tr >
+                                        <th>Nombre</th>
+                                        <th>Especialidad</th>
+                                        <th>Lugar de atención</th>
+                                    </tr>
+                                </thead>";
+                                while($row = pg_fetch_array($meds)){
+                                    echo "
+                                        <tr>
+                                            <td>".$row['mnombre']."</td>
+                                            <td>".$row['especialidad']."</td>
+                                            <td>".$row['establecimiento']."</td>
+                                        </tr>";
+                                }
+                                
+                            }
+
+                            $sql = "SELECT enf.nombre AS enfermedad, d.evolucion AS info, ins.nombre AS medicina, d.info_medicina FROM diagnostico d
+                            INNER JOIN enfermedad enf ON enf.enfermedad_id = d.enfermedad
+                            INNER JOIN insumos ins ON ins.insumo_id = d.medicina
+                            where d.paciente =".$rowid['pac_id'];
+                            $diags = pg_query($con,$sql);
+                            if(pg_num_rows($diags)>0){
+                                echo "
+                                    <thead>
+                                        <tr class='bg-primary titulo'>
+                                            <th><h2>Diagnosticos:</h2></th>
+                                        </tr>
+                                    </thead>
+                                    <thead>
+                                    <tr >
+                                        <th>Enfermedad</th>
+                                        <th>Informacion/Evolucion</th>
+                                        <th>Medicamento</th>
+                                        <th>Instrucciones del Medicamento</th>
+                                    </tr>
+                                </thead>";
+                                while($row = pg_fetch_array($diags)){
+                                    echo "
+                                        <tr>
+                                            <td>".$row['enfermedad']."</td>
+                                            <td>".$row['info']."</td>
+                                            <td>".$row['medicina']."</td>
+                                            <td>".$row['info_medicina']."</td>
+                                        </tr>";
+                                }
+                            }
+
+                            $sql = "SELECT p.nombre, p.apellido, m.nombre as mnombre,m.apellido as mapellido,est.nombre as enombre, pro.tipo, 
+                            CASE
+                                WHEN upper(pro.tipo) = 'EXAMEN'
+                                    THEN e.nombre
+                                WHEN upper(pro.tipo) = 'CIRUGIA'
+                                    THEN c.nombre
+                                END pnombre
+                            from procedimientos pro
+                            inner join examenes e on pro.id_tipo = e.examen_id
+                            inner join cirugia c on c.cirugia_id = pro.id_tipo
+                            inner join paciente p on pro.paciente = p.pac_id
+                            inner join medico m on pro.medico = m.medico_id 
+                            inner join establecimiento est on pro.establecimiento = est.estab_id
+                            WHERE pro.paciente = ".$rowid['pac_id'];
+                            $res =  pg_query($con,$sql);
+                            echo "
+                                <thead>
+                                    <tr>
+                                        <th><h2>Procedimientos:</h2></th>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr class='bg-primary titulo'>
+                                        <th>Paciente</th>
+                                        <th>Medico</th>
+                                        <th>Establecimiento</th>
+                                        <th>Tipo</th>
+                                        <th>Procedimiento</th>
+                                    </tr>
+                                </thead>";
+                            while($row = pg_fetch_array($res)){
+                                echo "
+                                    <tr>
+                                        <td>".$row['nombre']." ".$row['apellido']."</td>
+                                        <td>".$row['mnombre']." ".$row['mapellido']."</td>
+                                        <td>".$row['enombre']. "</td>
+                                        <td>".$row['tipo']. "</td>
+                                        <td>".$row['pnombre']. "</td>
+                                    </tr>";
+                            }
+
+                        }
                     }
+                    else{
+                        $sql = "SELECT p.nombre as panombre, p.apellido as papellido, m.nombre as mnombre,m.apellido as mapellido, pro.tipo, 
+                        CASE
+                            WHEN upper(pro.tipo) = 'EXAMEN'
+                                THEN e.nombre
+                            WHEN upper(pro.tipo) = 'CIRUGIA'
+                                THEN c.nombre
+                            END pnombre
+                        from procedimientos pro
+                        inner join examenes e on pro.id_tipo = e.examen_id
+                        inner join cirugia c on c.cirugia_id = pro.id_tipo
+                        inner join paciente p on pro.paciente = p.pac_id
+                        inner join medico m on pro.medico = m.medico_id";
+                        $res =  pg_query($con,$sql);
+                        echo "
+                            <thead>
+                                <tr>
+                                    <th><h2>Procedimientos:</h2></th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr class='bg-primary titulo'>
+                                    <th>Paciente</th>
+                                    <th>Medico</th>
+                                    <th>Tipo</th>
+                                    <th>Procedimiento</th>
+                                </tr>
+                            </thead>";
+                            while($row = pg_fetch_array($res)){
+                                echo "
+                                    <tr>
+                                        <td>".$row['panombre']." ".$row['papellido']."</td>
+                                        <td>".$row['mnombre']." ".$row['mapellido']."</td>
+                                        <td>".$row['tipo']. "</td>
+                                        <td>".$row['pnombre']. "</td>
+                                    </tr>";
+                            }
+                        }
+                    
                     ?>
                 </table>
             </div>

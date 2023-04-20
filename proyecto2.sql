@@ -624,3 +624,15 @@ VALUES
   (16, 'FALLECIDO'),
   (17, 'CURADO');
 
+update cita set establecimiento = 3 where fecha = '2023-08-12' and paciente = 1;
+update cita set establecimiento = 11 where fecha = '2024-03-16' and paciente = 1 and establecimiento = 4;
+insert into diagnostico(enfermedad, evolucion,paciente,medico,medicina,info_medicina) values
+(1, 'Gripe normal, temperatura menor a 40°.', 1, 3, 1, '1 cada 12H');
+update medico set especialidad = 'Medico General' where medico_id = 3;
+alter table procedimientos add column establecimiento INT REFERENCES establecimiento(estab_id);
+update procedimientos set establecimiento = 3 where paciente = 1 and medico = 10;
+update procedimientos set establecimiento = 1 where paciente = 1 and medico = 3;
+update procedimientos set establecimiento = 11 where paciente = 1 and medico = 1;
+delete from trabajo where medico = 3 and establecimiento = 12;
+delete from trabajo where medico = 3 and establecimiento = 4;
+delete from trabajo where medico = 3 and establecimiento = 10;
