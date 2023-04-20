@@ -140,44 +140,19 @@
         }
         </style>
         <div>
-            <form action="../../php/actions/insertar.php" method="POST" enctype="multipart/form-data">
+            <form action="../../php/validar/validarAdmin.php" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
                     <h2 class="form-title">Inicie Sesion Administrador</h2>
                     <div class="form-group">
-                        <label for="doc_name">Nombre:</label>
-                        <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                        <label for="doc_name">Email:</label>
+                        <input name="mail" type="text" id="doc_name" class="form-control" placeholder="Ingresa el email" required>
                     </div>
                     <div class="form-group">
-                        <label for="unidad">Unidad de salud:</label>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
+                        <label for="informacion">password:</label>
+                        <input name="pass" type="password" id="doc_name" class="form-control" placeholder="Ingresa el password" required>
                     </div>
                     <div class="form-group">
-                        <label for="informacion">Información:</label>
-                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha:</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Agregar">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Iniciar Sesion">
                     </div>
                 </div>
             </form>
