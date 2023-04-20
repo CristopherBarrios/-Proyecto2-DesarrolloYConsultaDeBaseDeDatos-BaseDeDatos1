@@ -41,7 +41,7 @@
         <div class="menu-bar">
             <div class="menu">
                 <ul class="menu-links">
-                    <li class="search-box">
+                    <li class="nav-link">
                         <a href="bar.php">
                             
                             <i class='bx bx-heart icon' ></i>
@@ -70,8 +70,8 @@
                         </a>
                     </li>
 
-                    <li class="nav-link">
-                        <a href="admin.php">
+                    <li class="search-box">
+                        <a href="reporteria.php">
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Reporteria</span>
                         </a>
@@ -122,7 +122,42 @@
     </nav>
 
     <section class="home">
-        <div class="text">Proyecto Hospital</div>
+        <div class="text">Reporteria</div>
+
+        <style>
+        .mi-tabla {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+        .mi-tabla td, .mi-tabla th {
+            width: 25%;
+            padding: 10px;
+            word-wrap: break-word;
+            /* border: 1px solid gray; */
+            border-bottom: 1px solid gray;
+        }
+        </style>
+        <div>
+            <form action="../../php/validar/validarAdmin.php" method="POST" enctype="multipart/form-data">
+                <div class="form-container">
+                    <h2 class="form-title">Inicie Sesion Administrador</h2>
+                    <div class="form-group">
+                        <label for="doc_name">Email:</label>
+                        <input name="mail" type="text" id="doc_name" class="form-control" placeholder="Ingresa el email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="informacion">password:</label>
+                        <input name="pass" type="password" id="doc_name" class="form-control" placeholder="Ingresa el password" required>
+                    </div>
+                    <div class="form-group">
+                        <input name="submit" type="submit" class="btn btn-primary" value="Iniciar Sesion">
+                    </div>
+                </div>
+            </form>
+        </div>
+
     </section>
 
     <script>

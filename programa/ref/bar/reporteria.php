@@ -139,17 +139,41 @@
             border-bottom: 1px solid gray;
         }
         </style>
+                <?php
+                    require('../../php/conectar/conexion.php');
+                    $sql = "SELECT enfermedad, COUNT(*) AS numero_muertos
+                            FROM(
+                                    SELECT  enfermedad.nombre AS enfermedad,  estado.estado 
+                                    FROM diagnostico
+                                    INNER JOIN enfermedad
+                                    ON enfermedad.enfermedad_id = diagnostico.enfermedad
+                                    INNER JOIN estado
+                                    ON estado.paciente = diagnostico.paciente
+                                    WHERE estado = 'FALLECIDO'
+                                ) AS estados
+                            GROUP BY enfermedad
+                            ORDER BY numero_muertos DESC
+                            LIMIT 10";
+                    $res =  pg_query($con,$sql);
+                ?>
             <div class="form-container2">
                 <h2 class="form-title">1. El top 10 de las enfermedades más mortales</h2>
                 <table class="mi-tabla">
                     <thead>
                         <tr class="bg-primary titulo">
-                            <th>Columna1</th>
-				            <th>Columna2</th>
-				            <th>Columna3</th>
-				            <th>Columna4</th>
+                            <th>Enfermedad</th>
+				            <th>Numero de Muertos</th>
                         </tr>
                     </thead>
+                    <?php
+                            while($row = pg_fetch_array($res)){
+                            echo "
+                            <tr>
+                                <td>".$row['enfermedad']."</td>
+                                <td>".$row['numero_muertos']."</td>
+                            </tr>";
+                            }
+                        ?>
                 </table>
             </div>
 
