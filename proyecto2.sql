@@ -624,6 +624,8 @@ VALUES
   (16, 'FALLECIDO'),
   (17, 'CURADO');
 
+  update estado set estado = 'FALLECIDO' where paciente = 2;
+
 update cita set establecimiento = 3 where fecha = '2023-08-12' and paciente = 1;
 update cita set establecimiento = 11 where fecha = '2024-03-16' and paciente = 1 and establecimiento = 4;
 insert into diagnostico(enfermedad, evolucion,paciente,medico,medicina,info_medicina) values
@@ -636,3 +638,91 @@ update procedimientos set establecimiento = 11 where paciente = 1 and medico = 1
 delete from trabajo where medico = 3 and establecimiento = 12;
 delete from trabajo where medico = 3 and establecimiento = 4;
 delete from trabajo where medico = 3 and establecimiento = 10;
+
+
+alter table examenes alter column nombre SET DATA TYPE VARCHAR(50);
+insert into examenes(nombre) values
+('Análisis de globulinas'),
+('Análisis del líquido cefalorraquídeo'),
+('Anoscopia'),
+('Biopsia de piel'),
+('Colposcopia'),
+('Conteo de glóbulos rojos'),
+('Conteo de glóbulos blancos'),
+('Conteo sanguíneo completo'),
+('Ecografía'),
+('Elastografía'),
+('Electrocardiograma'),
+('Examen de bilirrubina en sangre'),
+('Examen de cáncer de piel'),
+('Hisopado nasal'),
+('Examen dental'),
+('Examen del pie diabético'),
+('Mielografía'),
+('Nivel de acetaminofén'),
+('Nivel de salicilatos'),
+('Niveles de amoníaco'),
+('Niveles de colesterol'),
+('Niveles de prolactina'),
+('Prueba de ácido láctico'),
+('Prueba de ácido úrico'),
+('Prueba de alcohol en la sangre')
+;
+
+
+update medico set especialidad = 'Neumologia' where medico_id = 12;
+update medico set especialidad = 'Medico General' where medico_id = 7;
+update medico set especialidad = 'Cirujana' where nombre = 'Isabel' and apellido = 'Pérez';
+
+insert into insumos(tipo,nombre) values
+('Medicina', 'Salbutamol'),
+('Medicina','Oseltamivir'),
+('Medicina', 'Ceftriaxona');
+
+
+insert into diagnostico(enfermedad, evolucion, paciente, medico, medicina,info_medicina) values
+(21, 'Grave. 45 respiraciones por minuto. Oxigeno 24h', 2, 3, 8, 
+ 'Suministrada en dosis según considere el personal del Hospital.'),
+ (9, 'Asma leve. Pocas crisis.', 2, 12, 21, 
+ 'Cada 8 horas o en caso de crisis administrar no más de 3 veces.'),
+(36, 'Fiebre. Temperatura alta. Sin dolores extremos  ni dificultad para respirar.', 2, 16, 2, 
+ '1 cada 24h en ayuno.'),
+ (1, '38°. Dolor muscular.', 3, 7, 1, 
+ '1 cada 6h'),
+ (1, 'Fiebre alta, 40°. Dolor muscular alto, quejido por dar la mano. Dolor de garganta', 3, 12, 1, 
+ 'Inhalar cada 8h por cinco días. Tomar mucha agua. Descanso total.'),
+ (1, 'Fiebre alta, 40°. Dolor muscular alto, quejido por dar la mano. Dolor de garganta', 3, 3, 3, 
+ 'Inhalar cada 8h por cinco días. Tomar mucha agua. Descanso total.'),
+ (43, 'Fiebre. Tos y flema. Dificultad para respirar. Dolor de estómago.', 3, 16, 1, 
+ 'Nebulizar diario antes de dormir y al despertar. Ibuprofeno cada 12h. Omeprazol cada 24h.'),
+ (43, 'Fiebre. Tos y flema. Dificultad para respirar. Dolor de estómago.', 3, 16, 6, 
+ 'Nebulizar diario antes de dormir y al despertar. Ibuprofeno cada 12h. Omeprazol cada 24h.'),
+ (43, 'Fiebre. Tos y flema. Dificultad para respirar. Dolor de estómago.', 3, 16, 21, 
+ 'Nebulizar diario antes de dormir y al despertar. Ibuprofeno cada 12h. Omeprazol cada 24h.'),
+ (9, 'Crisis de Asma', 4, 12, 21, 
+ 'Nebulizar diario antes de dormir y al despertar durante toda la semana.'),
+ (9, 'Gonorrea', 4, 16, 23, 
+ 'Inyección cada 24h después de comer.'),
+ (1, 'Gripe controlada.', 4, 7, 4, 
+ 'Cada 24h después de comer por una semana.'),
+ (1, 'Gripe controlada.', 4, 3, 2, 
+ 'Cada 12h por 5 dias.');
+
+insert into procedimientos(tipo, id_tipo, medico, paciente, establecimiento) values
+('Cirugia', 27, 7, 2,4);
+
+insert into resultado values 
+('CURADO',1),
+('FALLECIDO',2),
+('NO CURADO',3);,
+('CURADO',4),
+('NO CURADO',5),
+('CURADO',6),
+('NO CURADO',7),
+('NO CURADO',8),
+('FALLECIDO',9),
+('FALLECIDO',10),
+('FALLECIDO',11),
+('NO CURADO',12),
+('CURADO',13);
+

@@ -198,16 +198,17 @@
 
                             $sql = "SELECT e.nombre, c.fecha FROM establecimiento e 
                                 INNER JOIN cita c ON e.estab_id = c.establecimiento
-                                WHERE c.paciente = '".$rowid['pac_id']."'";
+                                WHERE c.paciente = ".$rowid['pac_id']." ORDER BY c.fecha DESC";
                             $estab = pg_query($con,$sql);
+                            echo"
+                                <tr></tr>
+                                <thead>
+                                    <tr class='bg-primary titulo'>
+                                        <th><h2>Citas Registradas:</h2></th>
+                                    </tr>
+                                </thead>";
                             if(pg_num_rows($estab) > 0){
                                 echo "
-                                    <tr></tr>
-                                    <thead>
-                                        <tr class='bg-primary titulo'>
-                                            <th><h2>Citas Registradas:</h2></th>
-                                        </tr>
-                                    </thead>
                                     <thead>
                                         <tr >
                                             <th>Establecimiento</th>
@@ -222,22 +223,26 @@
                                         </tr>
                                     ";
                                 }
+                            }else{
+                                echo"<tr><td> --NO SE ENCUENTRA INFORMACIÓN ALMACENADA PARA ESTE CAMPO-- </td></tr>";
                             }
 
-                            $sql = "SELECT m.nombre AS mnombre, m.especialidad AS especialidad, e.nombre as establecimiento
+                            $sql = "SELECT DISTINCT m.nombre AS mnombre, m.especialidad AS especialidad, e.nombre as establecimiento
                             FROM medico m 
                             INNER JOIN diagnostico d ON d.medico = m.medico_id
                             INNER JOIN trabajo t ON t.medico = m.medico_id
                             INNER JOIN establecimiento e ON t.establecimiento = e.estab_id
                             WHERE d.paciente = '".$rowid['pac_id']."' AND t.medico = d.medico";
                             $meds = pg_query($con,$sql);
+                            
+                            echo"<thead>
+                                    <tr class='bg-primary titulo'>
+                                        <th><h2>Medicos que lo han tratado:</h2></th>
+                                    </tr>
+                                </thead>";
+
                             if(pg_num_rows($meds) > 0){
                                 echo "
-                                    <thead>
-                                        <tr class='bg-primary titulo'>
-                                            <th><h2>Medicos que lo han tratado:</h2></th>
-                                        </tr>
-                                    </thead>
                                     <thead>
                                     <tr >
                                         <th>Nombre</th>
@@ -254,37 +259,66 @@
                                         </tr>";
                                 }
                                 
+                            }else{
+                                echo"<tr><td> --NO SE ENCUENTRA INFORMACIÓN ALMACENADA PARA ESTE CAMPO-- </td></tr>";
                             }
 
-                            $sql = "SELECT enf.nombre AS enfermedad, d.evolucion AS info, ins.nombre AS medicina, d.info_medicina FROM diagnostico d
+                            $sql = "SELECT d.paciente, d.medico, enf.nombre AS enfermedad, d.evolucion AS info,
+                             ins.nombre AS medicina, d.info_medicina, r.resultado FROM diagnostico d
                             INNER JOIN enfermedad enf ON enf.enfermedad_id = d.enfermedad
                             INNER JOIN insumos ins ON ins.insumo_id = d.medicina
-                            where d.paciente =".$rowid['pac_id'];
+                            INNER JOIN resultado r ON d.diagnostico_id = r.diagnostico
+                            where d.paciente =".$rowid['pac_id']." ORDER BY d.diagnostico_id";
                             $diags = pg_query($con,$sql);
+
+                            echo "
+                                <thead>
+                                    <tr class='bg-primary titulo'>
+                                        <th><h2>Diagnosticos:</h2></th>
+                                    </tr>
+                                </thead>";
                             if(pg_num_rows($diags)>0){
                                 echo "
-                                    <thead>
-                                        <tr class='bg-primary titulo'>
-                                            <th><h2>Diagnosticos:</h2></th>
-                                        </tr>
-                                    </thead>
                                     <thead>
                                     <tr >
                                         <th>Enfermedad</th>
                                         <th>Informacion/Evolucion</th>
                                         <th>Medicamento</th>
                                         <th>Instrucciones del Medicamento</th>
+                                        <th>Resultado</th>
                                     </tr>
                                 </thead>";
+                                $enf = ""; $pac = ""; $medico=""; $medi = "";
                                 while($row = pg_fetch_array($diags)){
-                                    echo "
+                                    if($row['enfermedad'] == $enf AND $row['paciente'] == $pac AND $row['medico'] == $medico){
+                                        if($medi != $row['medicina']){
+                                            echo "
+                                                <tr>
+                                                    <td>----</td>
+                                                    <td>----</td>
+                                                    <td>".$row['medicina']."</td>
+                                                    <td>----</td>
+                                                    <td>----</td>
+                                                </tr>";
+                                        }
+                                    }
+                                    else{
+                                        echo "
                                         <tr>
                                             <td>".$row['enfermedad']."</td>
                                             <td>".$row['info']."</td>
                                             <td>".$row['medicina']."</td>
                                             <td>".$row['info_medicina']."</td>
+                                            <td>".$row['resultado']."</td>
                                         </tr>";
+                                    }
+                                    $medi = strval($row['medicina']);
+                                    $enf = strval($row['enfermedad']);
+                                    $pac = strval($row['paciente']);
+                                    $medico = strval($row['medico']);
                                 }
+                            }else{
+                                echo"<tr><td> --NO SE ENCUENTRA INFORMACIÓN ALMACENADA PARA ESTE CAMPO-- </td></tr>";
                             }
 
                             $sql = "SELECT p.nombre, p.apellido, m.nombre as mnombre,m.apellido as mapellido,est.nombre as enombre, pro.tipo, 
@@ -301,13 +335,18 @@
                             inner join medico m on pro.medico = m.medico_id 
                             inner join establecimiento est on pro.establecimiento = est.estab_id
                             WHERE pro.paciente = ".$rowid['pac_id'];
+
                             $res =  pg_query($con,$sql);
-                            echo "
+
+                            echo"
                                 <thead>
                                     <tr>
                                         <th><h2>Procedimientos:</h2></th>
                                     </tr>
-                                </thead>
+                                </thead>";
+
+                            if(pg_num_rows($res) > 0){
+                                echo "
                                 <thead>
                                     <tr class='bg-primary titulo'>
                                         <th>Paciente</th>
@@ -317,58 +356,23 @@
                                         <th>Procedimiento</th>
                                     </tr>
                                 </thead>";
-                            while($row = pg_fetch_array($res)){
-                                echo "
-                                    <tr>
-                                        <td>".$row['nombre']." ".$row['apellido']."</td>
-                                        <td>".$row['mnombre']." ".$row['mapellido']."</td>
-                                        <td>".$row['enombre']. "</td>
-                                        <td>".$row['tipo']. "</td>
-                                        <td>".$row['pnombre']. "</td>
-                                    </tr>";
+                                while($row = pg_fetch_array($res)){
+                                    echo "
+                                        <tr>
+                                            <td>".$row['nombre']." ".$row['apellido']."</td>
+                                            <td>".$row['mnombre']." ".$row['mapellido']."</td>
+                                            <td>".$row['enombre']. "</td>
+                                            <td>".$row['tipo']. "</td>
+                                            <td>".$row['pnombre']. "</td>
+                                        </tr>";
+                                }
+                            }
+                            else{
+                                echo"<tr><td> --NO SE ENCUENTRA INFORMACIÓN ALMACENADA PARA ESTE CAMPO-- </td></tr>";
                             }
 
                         }
                     }
-                    else{
-                        $sql = "SELECT p.nombre as panombre, p.apellido as papellido, m.nombre as mnombre,m.apellido as mapellido, pro.tipo, 
-                        CASE
-                            WHEN upper(pro.tipo) = 'EXAMEN'
-                                THEN e.nombre
-                            WHEN upper(pro.tipo) = 'CIRUGIA'
-                                THEN c.nombre
-                            END pnombre
-                        from procedimientos pro
-                        inner join examenes e on pro.id_tipo = e.examen_id
-                        inner join cirugia c on c.cirugia_id = pro.id_tipo
-                        inner join paciente p on pro.paciente = p.pac_id
-                        inner join medico m on pro.medico = m.medico_id";
-                        $res =  pg_query($con,$sql);
-                        echo "
-                            <thead>
-                                <tr>
-                                    <th><h2>Procedimientos:</h2></th>
-                                </tr>
-                            </thead>
-                            <thead>
-                                <tr class='bg-primary titulo'>
-                                    <th>Paciente</th>
-                                    <th>Medico</th>
-                                    <th>Tipo</th>
-                                    <th>Procedimiento</th>
-                                </tr>
-                            </thead>";
-                            while($row = pg_fetch_array($res)){
-                                echo "
-                                    <tr>
-                                        <td>".$row['panombre']." ".$row['papellido']."</td>
-                                        <td>".$row['mnombre']." ".$row['mapellido']."</td>
-                                        <td>".$row['tipo']. "</td>
-                                        <td>".$row['pnombre']. "</td>
-                                    </tr>";
-                            }
-                        }
-                    
                     ?>
                 </table>
             </div>
