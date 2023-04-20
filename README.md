@@ -8,5 +8,8 @@ Creado por:
 
 [Instrucciones](./Proyecto2.pdf)
 
-[base de datos. sql](./proyecto2.sql)
+[base de datos .sql](./proyecto2.sql)
+
+[Diagrama ER](./Proyecto2.png)
+
 
