@@ -7,7 +7,7 @@ $pass = $_POST['pass'];
 $sql2 = pg_query($con, "SELECT * FROM login WHERE email='$username'");
 
 if ($f2 = pg_fetch_array($sql2)) {
-    if ($pass == $f2['pasadmin']) {
+    if (is_null($pass)) {
         echo '<script>alert("INSERTE CONTRASEÑA")</script> ';
         echo "<script>location.href='../../../index.php'</script>";
     }

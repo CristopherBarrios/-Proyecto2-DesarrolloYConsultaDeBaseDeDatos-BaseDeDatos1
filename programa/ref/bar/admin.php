@@ -12,9 +12,10 @@
     <link rel="icon" type="image/png" sizes="32x32" href="../../img/fav/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="../../img/fav/favicon-16x16.png">
     <link rel="manifest" href="../../img/fav/site.webmanifest">
+    
 
     <link rel="stylesheet" href="../../css/barra.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    
 
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
     
@@ -62,15 +63,15 @@
                         </a>
                     </li>
 
-                    <li class="search-box">
+                    <li class="nav-link">
                         <a href="mantenimiento.php">
                             <i class='bx bx-bar-chart-alt-2 icon' ></i>
                             <span class="text nav-text">Mantenimiento</span>
                         </a>
                     </li>
 
-                    <li class="nav-link">
-                        <a href="admin.php">
+                    <li class="search-box">
+                        <a href="reporteria.php">
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Reporteria</span>
                         </a>
@@ -121,11 +122,27 @@
     </nav>
 
     <section class="home">
-        <div class="text">Mantenimiento de Usuarios</div>
+        <div class="text">Reporteria</div>
+
+        <style>
+        .mi-tabla {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+        .mi-tabla td, .mi-tabla th {
+            width: 25%;
+            padding: 10px;
+            word-wrap: break-word;
+            /* border: 1px solid gray; */
+            border-bottom: 1px solid gray;
+        }
+        </style>
         <div>
             <form action="../../php/actions/insertar.php" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
-                    <h2 class="form-title">Agrega nuevos Usuarios</h2>
+                    <h2 class="form-title">Inicie Sesion Administrador</h2>
                     <div class="form-group">
                         <label for="doc_name">Nombre:</label>
                         <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
@@ -166,124 +183,6 @@
             </form>
         </div>
 
-
-
-
-        <div class="separacion">
-            <form action="" method="POST" enctype="multipart/form-data">
-                <div class="form-container">
-                    <h2 class="form-title">Actualizar Informacion Usuarios</h2>
-                    <div class="form-group">
-                        <label for="doc_name">Nombre:</label>
-                        <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="unidad">Unidad de salud:</label>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
-                    </div>
-                    <div class="form-group">
-                        <label for="informacion">Información:</label>
-                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha:</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Modificar">
-                    </div>
-                </div>
-            </form>
-        </div>
-
-
-
-        <div class="separacion">
-            <form action="" method="POST" enctype="multipart/form-data">
-                <div class="form-container">
-                    <h2 class="form-title">Historial de traslado</h2>
-                    <div class="form-group">
-                        <label for="doc_name">Nombre:</label>
-                        <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="unidad">Unidad de salud:</label>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha de inicio en que laboro</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha final</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="unidad">Unidad de salud a la que se traslada:</label>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
-                    </div>
-                    <div class="form-group">
-                        <label for="informacion">Información:</label>
-                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary " value="Trasladar">
-                    </div>
-                </div>
-            </form>
-        </div>
     </section>
 
     <script>
