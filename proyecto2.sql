@@ -604,3 +604,23 @@ VALUES
 
 alter table diagnostico add column medicina INT REFERENCES insumos(insumo_id),info_medicina TEXT;
 
+INSERT INTO estado (paciente, estado)
+VALUES 
+  (1, 'CURADO'),
+  (2, 'ENFERMO'),
+  (3, 'FALLECIDO'),
+  (4, 'ENFERMO'),
+  (5, 'ENFERMO'),
+  (6, 'CURADO'),
+  (7, 'ENFERMO'),
+  (8, 'CURADO'),
+  (9, 'ENFERMO'),
+  (10, 'FALLECIDO'),
+  (11, 'CURADO'),
+  (12, 'ENFERMO'),
+  (13, 'ENFERMO'),
+  (14, 'ENFERMO'),
+  (15, 'CURADO'),
+  (16, 'FALLECIDO'),
+  (17, 'CURADO');
+
