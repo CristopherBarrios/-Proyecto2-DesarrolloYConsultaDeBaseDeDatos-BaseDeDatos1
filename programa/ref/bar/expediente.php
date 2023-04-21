@@ -70,7 +70,7 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="admin.php">
+                        <a href="reporteria.php">
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Reporteria</span>
                         </a>
@@ -173,8 +173,8 @@
                     require('../../php/conectar/conexion.php');
                     
                     if(isset($_POST["submit"])){
-                        $pnom = $_POST["nombre"];
-                        $pap = $_POST["apellido"];
+                        $pnom = trim($_POST["nombre"]);
+                        $pap = trim($_POST["apellido"]);
                         if($pnom != "" AND $pap != " "){
                             $getid = "SELECT pac_id FROM paciente
                             WHERE nombre = '".$pnom."' AND apellido = '".$pap."'";
@@ -227,21 +227,28 @@
                                 echo"<tr><td> --NO SE ENCUENTRA INFORMACIÓN ALMACENADA PARA ESTE CAMPO-- </td></tr>";
                             }
 
-                            $sql = "SELECT DISTINCT m.nombre AS mnombre, m.especialidad AS especialidad, e.nombre as establecimiento
-                            FROM medico m 
-                            INNER JOIN diagnostico d ON d.medico = m.medico_id
-                            INNER JOIN trabajo t ON t.medico = m.medico_id
-                            INNER JOIN establecimiento e ON t.establecimiento = e.estab_id
-                            WHERE d.paciente = '".$rowid['pac_id']."' AND t.medico = d.medico";
+                            $sql = "Select distinct m.nombre as mnombre,m.apellido as mapellido, m.especialidad as especialidad, e.nombre as establecimiento
+                                    from medico m
+                                    inner join trabajo t on t.medico = m.medico_id
+                                    inner join establecimiento e on e.estab_id = t.establecimiento
+                                    inner join diagnostico d on d.medico = m.medico_id
+                                    where d.paciente =".$rowid['pac_id'];
                             $meds = pg_query($con,$sql);
-                            
+
+                            $sql = "Select distinct m.nombre as mnombre,m.apellido as mapellido, m.especialidad as especialidad, e.nombre as establecimiento
+                                    from medico m
+                                    inner join trabajo t on t.medico = m.medico_id
+                                    inner join establecimiento e on e.estab_id = t.establecimiento
+                                    inner join procedimientos p on p.medico = m.medico_id
+                                    where p.paciente =".$rowid['pac_id'];
+                            $medsp = pg_query($con,$sql);                            
                             echo"<thead>
                                     <tr class='bg-primary titulo'>
                                         <th><h2>Medicos que lo han tratado:</h2></th>
                                     </tr>
                                 </thead>";
 
-                            if(pg_num_rows($meds) > 0){
+                            if(pg_num_rows($meds) > 0 or pg_num_rows($medsp) > 0){
                                 echo "
                                     <thead>
                                     <tr >
@@ -250,13 +257,25 @@
                                         <th>Lugar de atención</th>
                                     </tr>
                                 </thead>";
-                                while($row = pg_fetch_array($meds)){
-                                    echo "
-                                        <tr>
-                                            <td>".$row['mnombre']."</td>
-                                            <td>".$row['especialidad']."</td>
-                                            <td>".$row['establecimiento']."</td>
-                                        </tr>";
+                                if(pg_num_rows($meds) > 0){
+                                    while($row = pg_fetch_array($meds)){
+                                        echo "
+                                            <tr>
+                                                <td>".$row['mnombre']." ".$row['mapellido']."</td>
+                                                <td>".$row['especialidad']."</td>
+                                                <td>".$row['establecimiento']."</td>
+                                            </tr>";
+                                    }
+                                }
+                                if(pg_num_rows($medsp) > 0){
+                                    while($row = pg_fetch_array($medsp)){
+                                        echo "
+                                            <tr>
+                                            <td>".$row['mnombre']." ".$row['mapellido']."</td>
+                                                <td>".$row['especialidad']."</td>
+                                                <td>".$row['establecimiento']."</td>
+                                            </tr>";
+                                    }
                                 }
                                 
                             }else{
@@ -264,11 +283,11 @@
                             }
 
                             $sql = "SELECT d.paciente, d.medico, enf.nombre AS enfermedad, d.evolucion AS info,
-                             ins.nombre AS medicina, d.info_medicina, r.resultado FROM diagnostico d
-                            INNER JOIN enfermedad enf ON enf.enfermedad_id = d.enfermedad
-                            INNER JOIN insumos ins ON ins.insumo_id = d.medicina
-                            INNER JOIN resultado r ON d.diagnostico_id = r.diagnostico
-                            where d.paciente =".$rowid['pac_id']." ORDER BY d.diagnostico_id";
+                                    ins.nombre AS medicina, d.info_medicina, r.resultado FROM diagnostico d
+                                    INNER JOIN enfermedad enf ON enf.enfermedad_id = d.enfermedad
+                                    INNER JOIN insumos ins ON ins.insumo_id = d.medicina
+                                    INNER JOIN resultado r ON d.diagnostico_id = r.diagnostico
+                                    where d.paciente =".$rowid['pac_id']." ORDER BY d.diagnostico_id";
                             $diags = pg_query($con,$sql);
 
                             echo "
