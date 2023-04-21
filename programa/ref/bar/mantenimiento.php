@@ -320,7 +320,7 @@
                         <input name="hape" type="text" id="doc_ape" class="form-control" placeholder="Ingresa el apellido" required>
                     </div>
                     <div class="form-group">
-                        <input name="history" type="submit" class="btn btn-primary " value="Trasladar">
+                        <input name="history" type="submit" class="btn btn-primary " value="Revisar">
                     </div>
                     <table class="mi-tabla">
                             <?php

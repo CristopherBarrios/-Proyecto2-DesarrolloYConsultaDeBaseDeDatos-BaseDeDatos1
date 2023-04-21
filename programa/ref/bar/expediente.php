@@ -147,10 +147,15 @@
                                 
                             </td>
                             <td>
-                                <form action="../ventanaModificar/ventanaModificar.php" method="POST" enctype="multipart/form-data">
-                                    <input name='modificar' type='submit' class='btn btn-primary' value='MODIFICAR'>                                
+                            <form href='../ventanaModificar/ventanaModificar.php' method="POST" enctype="multipart/form-data">
+                                    <style>
+                                        .no-underline {
+                                            text-decoration: none;
+                                        }
+
+                                    </style>
+                                <a href="../ventanaModificar/ventanaModificar.php" class='btn btn-primary no-underline' type='submit' >MODIFICAR</a>                           
                                 </form>
-                                
                             </td>
                         </tr>
                     </table>
@@ -262,7 +267,7 @@
                                     <tr >
                                         <th>Nombre</th>
                                         <th>Especialidad</th>
-                                        <th>Lugar de atención</th>
+                                        <th>Trabajo Actual</th>
                                     </tr>
                                 </thead>";
                                 if(pg_num_rows($meds) > 0){

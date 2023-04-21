@@ -242,7 +242,7 @@
                         <td><input  name="bp4" id = "bp4" type="input" class="form-control" placeholder="Establecimiento" style="display: none;"></td>
                     </tr>
                     <tr>
-                        <td><input id="btn" name="modificar" type="submit" class='btn btn-primary no-underline' style="display:none;" value="MODIFICAR" > </td>
+                        <td><input id="btn" name="submit" type="submit" class='btn btn-primary no-underline' style="display:none;" value="MODIFICAR" > </td>
                     </tr>
                 </table>
                 <br><br>
@@ -263,13 +263,13 @@
             border-bottom: 1px solid gray;
         }
         </style>
-        <div class="separacion">
-            <div class="form-container2">
+    <div class="separacion">
+        <div class="form-container2">
             <table class="mi-tabla">
                 <?php
                     require('../../php/conectar/conexion.php');
                                 
-                    if(isset($_POST["modificar"])){
+                    if(isset($_POST["submit"])){
         
                         function coma($variable){
                             $variable .= ",";
@@ -329,9 +329,9 @@
                             }
                         }
                     }
-                            ?>
-                        </table>
-            </div>
+                ?>
+            </table>
+        </div>
     </div>
     </section>
 

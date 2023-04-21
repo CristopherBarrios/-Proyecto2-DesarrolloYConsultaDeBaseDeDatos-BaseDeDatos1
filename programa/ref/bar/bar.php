@@ -71,7 +71,7 @@
                     </li>
 
                     <li class="nav-link">
-                        <a href="admin.php">
+                        <a href="reporteria.php">
                             <i class='bx bx-pie-chart-alt icon' ></i>
                             <span class="text nav-text">Reporteria</span>
                         </a>
