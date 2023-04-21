@@ -122,8 +122,42 @@
     </nav>
 
     <section class="home">
-        <div class="text">Proyecto Hospital</div>
-    </section>
+  <div class="text">Proyecto Hospital</div>    
+  <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=853&q=80" alt="img hospital" class="img">
+</section>
+
+<style>
+  .home {
+    position: absolute;
+  }
+
+  .img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0.7;
+  }
+
+  .text {
+    font-size: 10em;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+
+</style>
+
+
+
 
     <script>
         const body = document.querySelector('body'),
