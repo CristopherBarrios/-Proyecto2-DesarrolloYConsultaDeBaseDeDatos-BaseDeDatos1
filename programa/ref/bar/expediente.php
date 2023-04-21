@@ -140,15 +140,23 @@
                                     <input name="apellido" id="info2" class="form-control" placeholder="Ingrese el apellido"></input>
                                 </div>
                             </td>
-                            <td colspan="2">
-                                <div class="form-group">
-                                    <input name="submit" type="submit" class="btn btn-primary" value="Buscar">
+                            <td>
+                                <div >
+                                    <input name="submit" type="submit" class="btn btn-primary" value="BUSCAR">
                                 </div>
+                                
+                            </td>
+                            <td>
+                                <form action="../ventanaModificar/ventanaModificar.php" method="POST" enctype="multipart/form-data">
+                                    <input name='modificar' type='submit' class='btn btn-primary' value='MODIFICAR'>                                
+                                </form>
+                                
                             </td>
                         </tr>
                     </table>
                 </div>
             </form>
+            
         </div>
         <style>
         .mi-tabla {
