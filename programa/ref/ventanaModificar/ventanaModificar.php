@@ -118,65 +118,221 @@
 
     </nav>
 
+    
+
     <section class="home">
         <div class="text">Modificar</div>
-<?php
-require('../../php/conectar/conexion.php');
-$id = $_REQUEST['id'];
-
-$sql = "SELECT * FROM users WHERE id='$id'";
-
-$res =  pg_query($con, $sql);
-$row = pg_fetch_array($res);
-?>
-
-        <form action="../../php/actions/modificar.php?id=<?php echo $row['id']; ?>" method="POST" enctype="multipart/form-data">
             <div class="form-container2">
+                            <script type="text/javascript">
+                                function tipo(val){
+                                    console.log("sientra");
+                                    if(val.value == "Diagnóstico"){
+                                        document.getElementById("d1").style.display="block";
+                                        document.getElementById("bd1").style.display="block";
+                                        document.getElementById("d2").style.display="block";
+                                        document.getElementById("bd2").style.display="block";
+                                        document.getElementById("d4").style.display="block";
+                                        document.getElementById("bd4").style.display="block";
+                                        document.getElementById("d5").style.display="block";
+                                        document.getElementById("bd5").style.display="block";
+                                        document.getElementById("p1").style.display="none";
+                                        document.getElementById("bp1").style.display="none";
+                                        document.getElementById("p2").style.display="none";
+                                        document.getElementById("bp2").style.display="none";
+                                        document.getElementById("p3").style.display="none";
+                                        document.getElementById("bp3").style.display="none";
+                                        document.getElementById("p4").style.display="none";
+                                        document.getElementById("bp4").style.display="none";
+                                    }
+                                    else{
+                                        document.getElementById("d1").style.display="none";
+                                        document.getElementById("bd1").style.display="none";
+                                        document.getElementById("d2").style.display="none";
+                                        document.getElementById("bd2").style.display="none";
+                                        document.getElementById("d4").style.display="none";
+                                        document.getElementById("bd4").style.display="none";
+                                        document.getElementById("d5").style.display="none";
+                                        document.getElementById("bd5").style.display="none";
+                                        document.getElementById("p1").style.display="block";
+                                        document.getElementById("bp1").style.display="block";
+                                        document.getElementById("p2").style.display="block";
+                                        document.getElementById("bp2").style.display="block";
+                                        document.getElementById("p3").style.display="block";
+                                        document.getElementById("bp3").style.display="block";
+                                        document.getElementById("p4").style.display="block";
+                                        document.getElementById("bp4").style.display="block";
+                                    }
+                                    document.getElementById("btn").style.display="block";
+                                }
+                            </script>
                 <table class="table">
-                    <tr>
-                        <th colspan="5" class="bg-primary text-center" >MODIFICA EL EXPEDIENTE</th></tr>
-                    <tr class="bg-primary">
-                        <th>Nombre: <?php echo  $row['name'];?></th>
-		                <th>Unidad de salud</th>
-                        <th>Información</th>
-		                <th>Fecha</th>
+                    <tr id = "tr1">
+                        <th colspan="5" class="bg-primary text-center" ><h2>MODIFICA EL EXPEDIENTE</h2></th></tr>
+                    <tr class="bg-primary" id = "tr2">
+                        <th>Nombre Paciente:</th>
+		                <th>Apellido Paciente:</th>
 		                <th></th>
+                        <th></th>
+                        <th></th>
 	                </tr>
-	                <tr class="bg-info">
+                    <tr class="bg-info" id = "tr3">
                         <td>
                             <input REQUIRED name="name" type="text" class="form-control" placeholder="Nombre" value="">
                         </td>
                         <td>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
+                            <input REQUIRED name="apellido" type="text" class="form-control" placeholder="Apellido" value="">
+                        </td>
+                    </tr >
+                    <tr>
+                        <th>Nombre Medico</th>
+                        <th>Apellido Medico</th>
+                    </tr>
+                        <td>
+                            <input REQUIRED name="mname" type="text" class="form-control" placeholder="Nombre" value="">
                         </td>
                         <td>
-                            <input REQUIRED name="informacion" type="text" class="form-control" placeholder="Nombre" value="">
+                            <input REQUIRED name="mapellido" type="text" class="form-control" placeholder="Apellido" value="">
                         </td>
-                        <td><input REQUIRED name="fecha" type="date" class="form-control" placeholder="Fecha" value="<?php echo $fecha = $row['date_added'];?>"></td>
-                        <td><input  name="modificar" type="submit" class="btn btn-success" value="MODIFICAR" > </td>
+                    <tr>
+                    <tr><th>Tipo</th></tr>
+                    <tr>
+                           
+                           <td>
+                               <select required name="opcion" class="form-control" onchange="tipo(this);">
+                                   <option disabled selected>Selecciona una opción</option>
+   
+                                   <option value="Diagnóstico">Diagnóstico</option>
+                                   <option value="Procedimiento">Procedimiento</option>
+   
+                               </select>
+                           </td>
+                    </tr>
+	                
+                    <tr>
+                        <th id ="d1" style="display: none;">Enfermedad</th>
+                        <td><input  name="bd1" id = "bd1" type="input" class="form-control" placeholder="Enfermedad" style="display: none;"></td>
+                        <th id ="d2" style="display: none;">Evolución</th>
+                        <td><input  name="bd2" id = "bd2" type="input" class="form-control"  placeholder="Evolución" style="display: none;"></td>
+                        
+                    </tr>
+                    <tr>
+                        <th id ="d4" style="display: none;">Medicina</th>
+                        <td><input  name="bd4" id = "bd4" type="input" class="form-control" placeholder="Medicina" style="display: none;"></td>
+                        <th id ="d5" style="display: none;">Instrucciones del Medicamento</th>
+                        <td><input  name="bd5" id = "bd5" type="input" class="form-control" placeholder="Instrucciones" style="display: none;"></td>
+                    </tr>
+                    <tr>
+                        <th id ="p1" style="display: none;">Tipo</th>
+                        <th>
+                            <select required name="bp1" id="bp1" class="form-control" style="display:none;">
+                                <option disabled selected>Selecciona una opción</option>
+                                <option value="Examen">Examen</option>
+                                <option value="Cirugia">Cirugia</option>
+
+                            </select>
+                        </th>
+                        <th id ="p2" style="display: none;">Id del Procedimiento</th>
+                        <td><input  name="bp2" id = "bp2" type="input" class="form-control" placeholder="ID" style="display: none;"></td>
+                    </tr>
+                    
+                    <tr>
+                        <th id ="p3" style="display: none;">Medico</th>
+                        <td><input  name="bp3" id = "bp3" type="input" class="form-control" placeholder="Medico" style="display: none;"></td>
+                        <th id ="p4" style="display: none;">Establecimiento</th>
+                        <td><input  name="bp4" id = "bp4" type="input" class="form-control" placeholder="Establecimiento" style="display: none;"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="btn" name="modificar" type="submit" class='btn btn-primary no-underline' style="display:none;" value="MODIFICAR" > </td>
                     </tr>
                 </table>
                 <br><br>
             </div>
-        </form>
+        </div>
+        <style>
+        .mi-tabla {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
 
+        }
+        .mi-tabla td, .mi-tabla th {
+            width: 25%;
+            padding: 10px;
+            word-wrap: break-word;
+            /* border: 1px solid gray; */
+            border-bottom: 1px solid gray;
+        }
+        </style>
+        <div class="separacion">
+            <div class="form-container2">
+            <table class="mi-tabla">
+                <?php
+                    require('../../php/conectar/conexion.php');
+                                
+                    if(isset($_POST["modificar"])){
+        
+                        function coma($variable){
+                            $variable .= ",";
+                        }
+                        
+                        
+                        echo"entra1";
+                
+                        $ptipo = $_POST['opcion']; $nom = $_POST['name']; $ape = $_POST['apellido']; $mnom = $_POST['mname']; $mape = $_POST['mapellido']; 
+                        if($ptipo != "" AND $nom != "" AND $ape != "" AND $mnom != "" AND $mape != ""){
+                            echo"entra2";
+                            $getpac = "SELECT pac_id FROM paciente WHERE nombre = '$nom' AND apellido = '$ape'";
+                            $qpac = pg_query($con, $getpac);
+                            $getmed = "SELECT medico_id FROM paciente WHERE nombre = '$mnom' AND apellido = '$mape'";
+                            $qmed = pg_query($con, $getmed);
+                            $band = false;
+                            $cont = 0;
+                            $enf = $_POST['bd1']; $evo = $_POST['bd2']; $dmed = $_POST['bd3']; $medi = $_POST['bd4']; $infom = $_POST['bd5'];
+                            $tipo = $_POST['bp1']; $id = $_POST['bp2']; $pmed = $_POST['bp3']; $estab = $_POST['bp4'];
+                            if($ptipo = "Diagnóstico"){
+                                echo"entra3";
+                                $sql = "UPDATE diagnostico SET ";
+                                if($enf != ""){
+                                    $getnef = "SELECT enfermedad_id FROM enfermedad WHERE nombre='$enf'";
+                                    $qenf = pg_query($getenf);
+                                    $sql .= "enfermedad = '".$qenf['enfermedad_id']. "'";
+                                    $band = true; $cont++;
+                                }
+                                if($evo != ""){
+                                    if($cont > 0){
+                                        coma($sql);
+                                    }
+                                    $sql .= "evolucion = '$evo' ";
+                                    $band = true; $cont++;
+                                }
+                                if($medi != ""){
+                                    if($cont > 0){
+                                        coma($sql);
+                                    }
+                                    $getins = "SELECT insumo_id FROM insumos WHERE nombre='$enf'";
+                                    $qins = pg_query($getins);
+                                    $sql .= "medicina = '".$qins['insumo_id']."'";
+                                    $band = true; $cont++;
+                                }
+                                if($infom != ""){
+                                    if($cont > 0){
+                                        coma($sql);
+                                    }
+                                    $sql .= "info_medicina = '$infom' ";
+                                    $band = true; $cont++;
+                                }
+                                if($band){
+                                    $sql .= " WHERE medico = '".$qmed['medico_id']." ' AND paciente ='".$qpac['pac_id']."'";
+                                    echo $sql;
+                                    $query = pg_query($con,$sql);
+                                }
+                            }
+                        }
+                    }
+                            ?>
+                        </table>
+            </div>
+    </div>
     </section>
 
     <script>
