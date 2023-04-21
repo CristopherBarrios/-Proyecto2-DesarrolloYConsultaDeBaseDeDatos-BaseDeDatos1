@@ -135,9 +135,6 @@
                                     <label for="doc_name">Establecimiento</label>
                                     <select required name="opcion" class="form-control">
                                         <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
 									<?php
 									require('../../php/conectar/conexion.php');
 									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
@@ -147,36 +144,9 @@
 										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
 										<?php 
 									} ?>
-
-
-
 								</select>
                                 </div>
-                            </td>
-                            <td>
-                                <div class="form-group">
-                                    <label for="unidad">Insumos</label>
-                                    <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM insumos ORDER BY insumo_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['insumo_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
-                                </div>
-                            </td>
-
+                            </td>                            
                             <td colspan="2">
                                 <div class="form-group">
                                     <input name="submit" type="submit" class="btn btn-primary" value="Buscar">
@@ -205,11 +175,29 @@
         <div class="separacion">
             <?php
                 require('../../php/conectar/conexion.php');
-                $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as insumos, inventario.cantidad, inventario.caduca, CASE WHEN caduca <= NOW() THEN 'Vencido' WHEN caduca <= NOW() + INTERVAL '1 month' THEN 'Por vencer pronto' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE caduca <= NOW() OR caduca <= NOW() + INTERVAL '1 month';";
+                    
+                // Verificar si se envió el formulario
+                if (!isset($_POST['submit'])) {
+                    // Consulta SQL por defecto, sin filtrar por establecimiento
+                    $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as insumos, inventario.cantidad, inventario.caduca, CASE WHEN caduca <= NOW() THEN 'Vencido' WHEN caduca <= NOW() + INTERVAL '1 month' THEN 'Por vencer pronto' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE caduca <= NOW() OR caduca <= NOW() + INTERVAL '1 month';";
+                    } 
+                else {
+                    $establecimiento =$_POST['opcion'];
+                    // Obtener el valor seleccionado en el menú desplegable
+                    if ($establecimiento >= 0){// Modificar la consulta SQL para incluir la cláusula WHERE
+                        $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as insumos, inventario.cantidad, inventario.caduca, CASE WHEN caduca <= NOW() THEN 'Vencido' WHEN caduca <= NOW() + INTERVAL '1 month' THEN 'Por vencer pronto' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE (caduca <= NOW() OR caduca <= NOW() + INTERVAL '1 month') AND establecimiento.estab_id = $establecimiento;";
+                    }
+                    else{
+                        $sql = "SELECT * FROM inventario WHERE 1 = 0;";
+                    }
+                }
+
                 $res =  pg_query($con,$sql);
+                
             ?>
             <div class="form-container2">
                 <h2 class="form-title">Medicamento vencido/por vencer</h2>
+                
                 <table class="mi-tabla">
                     <thead>
                         <tr class="bg-primary titulo">
@@ -242,7 +230,22 @@
         <div class="separacion">
             <?php
                 require('../../php/conectar/conexion.php');
-                $sql = "select establecimiento.nombre as establecimiento, insumos.nombre as  insumos , inventario.cantidad, inventario.caduca, case when cantidad <=5 then 'Últimas unidades' when (cantidad > 5 and cantidad <=15) then 'Por terminarse' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE cantidad <=15;";
+                // Verificar si se envió el formulario
+                if (!isset($_POST['submit'])) {
+                    // Consulta SQL por defecto, sin filtrar por establecimiento
+                    $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as  insumos , inventario.cantidad, inventario.caduca, case when cantidad <=5 then 'Últimas unidades' when (cantidad > 5 and cantidad <=15) then 'Pocas unidades' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE cantidad <=15;";
+                    } 
+                else {
+                    $establecimiento =$_POST['opcion'];
+                    // Obtener el valor seleccionado en el menú desplegable
+                    if ($establecimiento >= 0){// Modificar la consulta SQL para incluir la cláusula WHERE
+                        $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as  insumos , inventario.cantidad, inventario.caduca, case when cantidad <=5 then 'Últimas unidades' when (cantidad > 5 and cantidad <=15) then 'Por terminarse' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE (cantidad <=15) AND establecimiento.estab_id = $establecimiento;";
+                    }
+                    else{
+                        $sql = "SELECT * FROM inventario WHERE 1 = 0;";
+                    }
+                }
+
                 $res =  pg_query($con,$sql);
             ?>
             <div class="form-container2">
