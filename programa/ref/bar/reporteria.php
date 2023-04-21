@@ -141,19 +141,12 @@
         </style>
                 <?php
                     require('../../php/conectar/conexion.php');
-                    $sql = "SELECT enfermedad, COUNT(*) AS numero_muertos
-                            FROM(
-                                    SELECT  enfermedad.nombre AS enfermedad,  estado.estado 
-                                    FROM diagnostico
-                                    INNER JOIN enfermedad
-                                    ON enfermedad.enfermedad_id = diagnostico.enfermedad
-                                    INNER JOIN estado
-                                    ON estado.paciente = diagnostico.paciente
-                                    WHERE estado = 'FALLECIDO'
-                                ) AS estados
-                            GROUP BY enfermedad
-                            ORDER BY numero_muertos DESC
-                            LIMIT 10";
+                    $sql = "SELECT e.nombre as enfermedad, count(*) as numero_muertos from enfermedad e
+                        inner join diagnostico d on d.enfermedad = e.enfermedad_id
+                        inner join resultado r on d.diagnostico_id = r.diagnostico
+                        WHERE r.resultado = 'FALLECIDO'
+                        GROUP BY e.nombre ORDER BY numero_muertos DESC
+                        LIMIT 10;";
                     $res =  pg_query($con,$sql);
                 ?>
             <div class="form-container2">
@@ -166,12 +159,14 @@
                         </tr>
                     </thead>
                     <?php
-                            while($row = pg_fetch_array($res)){
-                            echo "
-                            <tr>
-                                <td>".$row['enfermedad']."</td>
-                                <td>".$row['numero_muertos']."</td>
-                            </tr>";
+                            if(pg_num_rows($res) > 0){
+                                while($row = pg_fetch_array($res)){
+                                    echo "
+                                    <tr>
+                                        <td>".$row['enfermedad']."</td>
+                                        <td>".$row['numero_muertos']."</td>
+                                    </tr>";
+                                }
                             }
                         ?>
                 </table>
@@ -180,13 +175,11 @@
             <div class="separacion">
                 <?php
                     require('../../php/conectar/conexion.php');
-                    $sql = "SELECT medico AS id, nombre AS medico, COUNT(*) AS cantidad
-                            FROM procedimientos
-                            INNER JOIN medico
-                            ON procedimientos.medico = medico.medico_id
-                            GROUP BY id, nombre
-                            ORDER BY cantidad DESC
-                            LIMIT 10";
+                    $sql = "SELECT m.medico_id AS id, m.nombre AS nmedico, count(*) AS cantidad
+                            FROM medico m
+                            INNER JOIN procedimientos p ON p.medico = m.medico_id
+                            INNER JOIN diagnostico d ON p.medico = d.medico
+                            GROUP BY id, nmedico ORDER BY cantidad DESC LIMIT 10";
                     $res =  pg_query($con,$sql);
                 ?>
                 <div class="form-container2">
@@ -204,7 +197,7 @@
                             echo "
                             <tr>
                                 <td>".$row['id']."</td>
-                                <td>".$row['medico']."</td>
+                                <td>".$row['nmedico']."</td>
                                 <td>".$row['cantidad']."</td>
                             </tr>";
                             }
