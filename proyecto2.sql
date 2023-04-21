@@ -666,3 +666,8 @@ insert into resultado values
 ('FALLECIDO',11),
 ('NO CURADO',12),
 ('CURADO',13);
+
+insert into login(usuar,password,email,pasadmin)values
+('Mendez','7654321','mendez@gmail.com','admin'),
+('Cristopher','1234567','cristopher@gmail.com',''),
+('Renatto','1234567','renatto@gmail.com','');
