@@ -131,6 +131,10 @@
                         <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
                     </div>
                     <div class="form-group">
+                        <label for="doc_name">Apellido:</label>
+                        <input name="ape" type="text" id="doc_ape" class="form-control" placeholder="Ingresa el apellido" required>
+                    </div>
+                    <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
                         <select required name="opcion" class="form-control">
                                         <option hidden value="Escoja">Selecciona una opción</option>
@@ -195,6 +199,7 @@
                         <tr class="bg-primary titulo">
                             <th>ID</th>
 				            <th>Nombre</th>
+                            <th>Apellido</th>
 				            <th>Unidad de salud</th>
 				            <th>Información</th>
 				            <th>Fecha</th>
@@ -209,11 +214,12 @@
                         <tr>
                             <td>".$row['id']."</td>
                             <td>".$row['name']."</td>
+                            <td>".$row['apellido']."</td>
                             <td>".$row['health_unit']."</td>
                             <td>".$row['information']."</td>
                             <td>".$fecha2. "</td>
                             <td>
-                            <form action='../../php/actions/eliminar.php?id=".$row['id']."' method='POST' enctype='multipart/form-data'>
+                            <form action='../../php/actions/eliminar.php?id=".$row['id']."' method='POST'>
                                 <input name='eliminar' type='submit' class='btn btn-danger' value='ELIMINAR' onclick='return confirm(\"¿Seguro que deseas eliminar este registro?\")' >
                             </form>
                             <br>
@@ -233,10 +239,14 @@
         <div class="separacion">
             <form action="" method="POST" enctype="multipart/form-data">
                 <div class="form-container">
-                    <h2 class="form-title">Actualizar Informacion Usuarios</h2>
+                    <h2 class="form-title">Trasladar Usuario</h2>
                     <div class="form-group">
                         <label for="doc_name">Nombre:</label>
                         <input name="doc_name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="doc_ape">Apellido:</label>
+                        <input name="doc_ape" type="text" id="doc_ape" class="form-control" placeholder="Ingresa el apellido" required>
                     </div>
                     <div class="form-group">
                         <label for="unidad">Unidad de salud:</label>
@@ -260,15 +270,36 @@
 								</select>
                     </div>
                     <div class="form-group">
-                        <label for="informacion">Información:</label>
-                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha:</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary" value="Modificar">
+                        <input name="modificar" type="submit" class="btn btn-primary" value="Modificar">
+                        <?php require('../../php/conectar/conexion.php');
+
+                            if(isset($_POST['modificar'])){
+                                $nom = $_POST['doc_name'];
+                                $ape = $_POST['doc_ape'];
+                                $hu = $_POST['opcion'];
+
+                                if($nom != "" AND $ape != ""  AND $hu != ""){
+                                    $sql = "SELECT information, date_added from users WHERE name='$nom' AND apellido ='$ape'";
+                                    $res = pg_query($con,$sql);
+                                    $info = pg_fetch_array($res);
+                                    
+
+                                    $sql = "INSERT INTO users(name, health_unit, information, date_added, apellido)
+                                    VALUES ('$nom', '$hu','".$info['information']."','".$info['date_added']."'
+                                    ,'$ape')";
+                                    $res = pg_query($con, $sql);
+
+                                    $sql = "SELECT medico_id FROM medico WHERE nombre='$nom' AND apellido = '$ape'";
+                                    $id = pg_query($con,$sql);
+                                    $rowid = pg_fetch_array($id);
+
+                                    $sql = "UPDATE trabajo SET establecimiento = '$hu' WHERE medico ='".$rowid['medico_id']."'";
+                                    $res = pg_query($con,$sql);
+                                }
+                                
+                            }
+
+                        ?>
                     </div>
                 </div>
             </form>
@@ -282,66 +313,47 @@
                     <h2 class="form-title">Historial de traslado</h2>
                     <div class="form-group">
                         <label for="doc_name">Nombre:</label>
-                        <input name="name" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
+                        <input name="hname" type="text" id="doc_name" class="form-control" placeholder="Ingresa el nombre" required>
                     </div>
                     <div class="form-group">
-                        <label for="unidad">Unidad de salud:</label>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
+                        <label for="doc_name">Apellido:</label>
+                        <input name="hape" type="text" id="doc_ape" class="form-control" placeholder="Ingresa el apellido" required>
                     </div>
                     <div class="form-group">
-                        <label for="fecha">Fecha de inicio en que laboro</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
+                        <input name="history" type="submit" class="btn btn-primary " value="Trasladar">
                     </div>
-                    <div class="form-group">
-                        <label for="fecha">Fecha final</label>
-                        <input name="fecha" type="date" id="fecha" class="form-control" value="<?php echo date('Y-m-d'); ?>" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="unidad">Unidad de salud a la que se traslada:</label>
-                        <select required name="opcion" class="form-control">
-                                        <option hidden value="Escoja">Selecciona una opción</option>
-								
-								
-								
-									<?php
-									require('../../php/conectar/conexion.php');
-									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
-									while($row2 = pg_fetch_array($res2))
-									{
-										?>
-										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
-										<?php 
-									} ?>
-
-
-
-								</select>
-                    </div>
-                    <div class="form-group">
-                        <label for="informacion">Información:</label>
-                        <textarea name="informacion" id="informacion" class="form-control" placeholder="Ingresa la información"></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <input name="submit" type="submit" class="btn btn-primary " value="Trasladar">
-                    </div>
+                    <table class="mi-tabla">
+                            <?php
+                                if(isset($_POST['history'])){
+                                    $nom = $_POST['hname']; $ape = $_POST['hape'];
+                                    if($nom != "" AND $ape != ""){
+                                        $sql = "SELECT name, apellido, health_unit, e.nombre as estab
+                                        FROM users 
+                                        INNER JOIN establecimiento e ON e.estab_id = users.health_unit::INTEGER
+                                        WHERE name='$nom' AND apellido='$ape'";
+                                        $res = pg_query($con,$sql);
+                                        if(pg_num_rows($res) > 0){
+                                            echo "
+                                                <thead>
+                                                <tr >
+                                                    <th>Nombre  Apellido</th>
+                                                    <th>ID Establecimiento</th>
+                                                    <th>Lugar de trabajo</th>
+                                                </tr>
+                                                </thead>";
+                                            while($row = pg_fetch_array($res)){
+                                                echo "
+                                                    <tr>
+                                                        <td>".$row['name']." ".$row['apellido']."</td>
+                                                        <td>".$row['health_unit']."</td>
+                                                        <td>".$row['estab']."</td>
+                                                    </tr>";
+                                            }
+                                        }
+                                    }
+                                }
+                            ?>
+                        </table>
                 </div>
             </form>
         </div>
