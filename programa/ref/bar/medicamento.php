@@ -184,11 +184,11 @@
                 else {
                     $establecimiento =$_POST['opcion'];
                     // Obtener el valor seleccionado en el menú desplegable
-                    if ($establecimiento >= 0){// Modificar la consulta SQL para incluir la cláusula WHERE
+                    if ($establecimiento !="Escoja"){// Modificar la consulta SQL para incluir la cláusula WHERE
                         $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as insumos, inventario.cantidad, inventario.caduca, CASE WHEN caduca <= NOW() THEN 'Vencido' WHEN caduca <= NOW() + INTERVAL '1 month' THEN 'Por vencer pronto' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE (caduca <= NOW() OR caduca <= NOW() + INTERVAL '1 month') AND establecimiento.estab_id = $establecimiento;";
                     }
                     else{
-                        $sql = "SELECT * FROM inventario WHERE 1 = 0;";
+                        $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as insumos, inventario.cantidad, inventario.caduca, CASE WHEN caduca <= NOW() THEN 'Vencido' WHEN caduca <= NOW() + INTERVAL '1 month' THEN 'Por vencer pronto' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE caduca <= NOW() OR caduca <= NOW() + INTERVAL '1 month';";
                     }
                 }
 
@@ -238,11 +238,11 @@
                 else {
                     $establecimiento =$_POST['opcion'];
                     // Obtener el valor seleccionado en el menú desplegable
-                    if ($establecimiento >= 0){// Modificar la consulta SQL para incluir la cláusula WHERE
+                    if ($establecimiento != "Escoja"){// Modificar la consulta SQL para incluir la cláusula WHERE
                         $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as  insumos , inventario.cantidad, inventario.caduca, case when cantidad <=5 then 'Últimas unidades' when (cantidad > 5 and cantidad <=15) then 'Por terminarse' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE (cantidad <=15) AND establecimiento.estab_id = $establecimiento;";
                     }
                     else{
-                        $sql = "SELECT * FROM inventario WHERE 1 = 0;";
+                        $sql = "SELECT establecimiento.nombre as establecimiento, insumos.nombre as  insumos , inventario.cantidad, inventario.caduca, case when cantidad <=5 then 'Últimas unidades' when (cantidad > 5 and cantidad <=15) then 'Pocas unidades' ELSE '' END AS estado FROM inventario JOIN establecimiento ON inventario.establecimiento = establecimiento.estab_id JOIN insumos ON inventario.insumos = insumos.insumo_id WHERE cantidad <=15;";
                     }
                 }
 
