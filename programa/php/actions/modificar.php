@@ -16,7 +16,7 @@ function mainUpdate($con) {
 
 if(isset($_POST['modificar'])){
 	mainUpdate($con);
-	header('Location:../../ref/bar/expediente.php');
+	header('Location:../../ref/bar/mantenimiento.php');
 	}
 
 ?>	

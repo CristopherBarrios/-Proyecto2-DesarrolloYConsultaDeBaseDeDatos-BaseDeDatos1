@@ -167,6 +167,67 @@
         </div>
 
 
+        <style>
+        .mi-tabla {
+            table-layout: fixed;
+            width: 100%;
+            border-collapse: collapse;
+
+        }
+        .mi-tabla td, .mi-tabla th {
+            width: 25%;
+            padding: 10px;
+            word-wrap: break-word;
+            /* border: 1px solid gray; */
+            border-bottom: 1px solid gray;
+        }
+        </style>
+        <div class="separacion">
+            <?php
+                require('../../php/conectar/conexion.php');
+                $sql = "SELECT * FROM users ORDER BY date_added ASC";
+                $res =  pg_query($con,$sql);
+            ?>
+            <div class="form-container2">
+                <h2 class="form-title">Usuarios</h2>
+                <table class="mi-tabla">
+                    <thead>
+                        <tr class="bg-primary titulo">
+                            <th>ID</th>
+				            <th>Nombre</th>
+				            <th>Unidad de salud</th>
+				            <th>Información</th>
+				            <th>Fecha</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <?php
+                    while($row = pg_fetch_array($res)){
+                        $fecha1=$row['date_added'];
+                        $fecha2=date("d-m-Y",strtotime($fecha1));
+                        echo "
+                        <tr>
+                            <td>".$row['id']."</td>
+                            <td>".$row['name']."</td>
+                            <td>".$row['health_unit']."</td>
+                            <td>".$row['information']."</td>
+                            <td>".$fecha2. "</td>
+                            <td>
+                            <form action='../../php/actions/eliminar.php?id=".$row['id']."' method='POST' enctype='multipart/form-data'>
+                                <input name='eliminar' type='submit' class='btn btn-danger' value='ELIMINAR' onclick='return confirm(\"¿Seguro que deseas eliminar este registro?\")' >
+                            </form>
+                            <br>
+                            <form action='../ventanaModificar/ventanaModificar.php?id=".$row['id']."'method='POST' enctype='multipart/form-data'>
+                                <input name='submit' type='submit' class='btn btn-primary' value='MODIFICAR'  >
+                            </form> 
+                        </td>
+                        </tr>";
+                    }
+                    ?>
+                </table>
+            </div>
+        </div>
+
 
 
         <div class="separacion">

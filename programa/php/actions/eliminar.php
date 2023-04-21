@@ -16,6 +16,6 @@ function mainUnlink($con) {
 
 if(isset($_POST['eliminar'])){
 	mainUnlink($con);
-    header('Location:../../ref/bar/expediente.php');
+    header('Location:../../ref/bar/mantenimiento.php');
 }
 ?>

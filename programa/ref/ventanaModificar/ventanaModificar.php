@@ -147,14 +147,24 @@ $row = pg_fetch_array($res);
                             <input REQUIRED name="name" type="text" class="form-control" placeholder="Nombre" value="">
                         </td>
                         <td>
-                                <select required name="opcion" class="form-control">
-                                    <option disabled selected>Selecciona una opción</option>
+                        <select required name="opcion" class="form-control">
+                                        <option hidden value="Escoja">Selecciona una opción</option>
+								
+								
+								
+									<?php
+									require('../../php/conectar/conexion.php');
+									$res2 =  pg_query($con,"SELECT * FROM establecimiento ORDER BY estab_id ASC");
+									while($row2 = pg_fetch_array($res2))
+									{
+										?>
+										<option value="<?php echo $row2['estab_id']?>"> <?php echo $row2['nombre'];?></option>";
+										<?php 
+									} ?>
 
-                                    <option value="opcion1">Opción 1</option>
-                                    <option value="opcion2">Opción 2</option>
-                                    <option value="opcion3">Opción 3</option>
 
-                                </select>
+
+								</select>
                         </td>
                         <td>
                             <input REQUIRED name="informacion" type="text" class="form-control" placeholder="Nombre" value="">
